@@ -86,7 +86,7 @@ public class Cinema {
         String tempV = "";
         while (iter.hasNext()) {
             Map.Entry<Days, Schedule> temp = iter.next();
-            tempK = "\n-----" + temp.getKey().toString() + "------\n";
+            tempK = "\n -----" + temp.getKey().toString() + "------\n";
             tempV = temp.getValue().toString();
             out += tempK + tempV;
         }
