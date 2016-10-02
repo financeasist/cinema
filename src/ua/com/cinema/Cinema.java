@@ -20,15 +20,6 @@ public class Cinema {
             map.put(days[i], new Schedule());
         }
     }
-    public boolean checkTime(Time start, Time end) {
-
-        if (start.compareTo(open) == 1 && end.compareTo(close) == -1
-                && close.compareTo(open) == 1) {
-            return true;
-        } else
-            return false;
-
-    }
     public void addMovie(Movie movie, Time... time) {
         Days[] days = Days.values();
         for (int j = 0; j < days.length; j++) {
@@ -39,13 +30,23 @@ public class Cinema {
         }
     }
     public void addSeance(String nameOFDay, Seance seance){
-        Days[] days = Days.values();
+           	   Days[] days = Days.values();
+       
         for (int i=0;i< days.length;i++){
             if (nameOFDay.equalsIgnoreCase(map.get(days[i]).toString())){
                 if (checkTime(seance.getStartTime(),seance.getEndTime()))
                 map.get(days[i]).addSeans(seance);
             }
         }
+    }
+    public boolean checkTime(Time start, Time end) {
+
+        if (start.compareTo(open) == 1 && end.compareTo(close) == -1
+                && close.compareTo(open) == 1) {
+            return true;
+        } else
+            return false;
+
     }
     public void removeMovie(String movie) {
 

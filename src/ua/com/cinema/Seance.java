@@ -5,8 +5,12 @@ package ua.com.cinema;
  * @author RomanGrupskyi;
  */
 public class Seance implements Comparable<Seance> {
+    public static Time endingTime(Time start, Time duration) {
+        return new Time(start.getHour() + duration.getHour(), start.getMin() + duration.getMin());
+    }
     private Movie movie;
     private Time startTime;
+
     private Time endTime;
 
     public Seance(Movie movie, Time startTime) {
@@ -22,43 +26,11 @@ public class Seance implements Comparable<Seance> {
             this.endTime = new Time(deltaHour + 1, deltaMin - 60);
     }
 
-    public static Time endingTime(Time start, Time duration) {
-        return new Time(start.getHour() + duration.getHour(), start.getMin() + duration.getMin());
-    }
-
-    public Movie getMovie() {
-        return movie;
-    }
-
-    public Time getStartTime() {
-        return startTime;
-    }
-
-    public Time getEndTime() {
-        return endTime;
-    }
-
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
-
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setEndTime(Time endTime) {
-        this.endTime = endTime;
-    }
-
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
-        result = prime * result + ((movie == null) ? 0 : movie.hashCode());
-        result = prime * result
-                + ((startTime == null) ? 0 : startTime.hashCode());
-        return result;
+    public int compareTo(Seance o) {
+
+        return this.startTime.compareTo(o.startTime);
+
     }
 
     @Override
@@ -87,6 +59,43 @@ public class Seance implements Comparable<Seance> {
             return false;
         return true;
     }
+
+    public Time getEndTime() {
+        return endTime;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public Time getStartTime() {
+        return startTime;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
+        result = prime * result + ((movie == null) ? 0 : movie.hashCode());
+        result = prime * result
+                + ((startTime == null) ? 0 : startTime.hashCode());
+        return result;
+    }
+
+    public void setEndTime(Time endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
+    }
+
+
+
     public String toString() {
         if (startTime.getMin() < 10)
             return movie.getTitle() + "   " + startTime.getHour() + ":0"
@@ -100,14 +109,5 @@ public class Seance implements Comparable<Seance> {
             return movie.getTitle() + "   " + startTime.getHour() + ":"
                     + startTime.getMin() + " - " + endTime.getHour() + ":"
                     + endTime.getMin() + '\n';
-    }
-
-
-
-    @Override
-    public int compareTo(Seance o) {
-
-        return this.startTime.compareTo(o.startTime);
-
     }
 }

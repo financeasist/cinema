@@ -9,8 +9,6 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.swing.JOptionPane;
-
 public class Schedule {
 	public Set<Seance> set;
 
@@ -24,21 +22,18 @@ public class Schedule {
 
 	}
 
-	public void removeSeance(Seance seance) {
-		set.remove(seance);
-	}
-
 	public Set<Seance> getSet() {
 		return set;
+	}
+
+	public void removeSeance(Seance seance) {
+		set.remove(seance);
 	}
 
 	@Override
 	public String toString() {
 		String out = "";
 		if (set.isEmpty()) {
-//			JOptionPane
-//					.showMessageDialog(null,
-//							"Ви ще не добавили жодного сеансу! Будьласка, заповніть розклад сеансами!");
 
 			return "Ви ще не добавили жодного сеансу! Будьласка, заповніть розклад сеансами!";
 		} else {
