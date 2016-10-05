@@ -1,4 +1,4 @@
-package ua.com.cinema;
+package ua.com.cinema.models;
 /**
  *
  * @author RomanGrupskyi;

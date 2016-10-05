@@ -1,4 +1,4 @@
-package ua.com.cinema;
+package ua.com.cinema.action;
 /**
 *
 * @author RomanGrupskyi;
@@ -13,6 +13,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
+import ua.com.cinema.models.Cinema;
+import ua.com.cinema.models.Movie;
+import ua.com.cinema.models.Time;
 
 public class CinemaGuiMain {
 

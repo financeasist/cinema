@@ -1,4 +1,4 @@
-package ua.com.cinema;
+package ua.com.cinema.action;
 
 import java.awt.EventQueue;
 

@@ -1,6 +1,8 @@
-package ua.com.cinema;
+package ua.com.cinema.models;
 
 import java.util.*;
+
+import ua.com.cinema.enums.Days;
 /**
  *
  * @author RomanGrupskyi;
