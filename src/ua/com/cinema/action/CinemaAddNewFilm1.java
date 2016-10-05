@@ -1,4 +1,4 @@
-package ua.com.cinema;
+package ua.com.cinema.action;
 /**
 *
 * @author RomanGrupskyi;
@@ -15,6 +15,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import ua.com.cinema.models.Cinema;
+import ua.com.cinema.models.Movie;
+import ua.com.cinema.models.Time;
 
 public class CinemaAddNewFilm1 {
 
