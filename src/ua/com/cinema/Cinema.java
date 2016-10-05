@@ -33,7 +33,7 @@ public class Cinema {
            	   Days[] days = Days.values();
        
         for (int i=0;i< days.length;i++){
-            if (nameOFDay.equalsIgnoreCase(map.get(days[i]).toString())){
+            if (nameOFDay.equalsIgnoreCase((days[i]).toString())){
                 if (checkTime(seance.getStartTime(),seance.getEndTime()))
                 map.get(days[i]).addSeans(seance);
             }
