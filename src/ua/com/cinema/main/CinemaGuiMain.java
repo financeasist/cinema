@@ -1,4 +1,4 @@
-package ua.com.cinema.action;
+package ua.com.cinema.main;
 /**
 *
 * @author RomanGrupskyi;
@@ -14,13 +14,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import ua.com.cinema.action.CinemaAddNewFilmStartWindow;
+import ua.com.cinema.action.CinemaAddSeance;
+import ua.com.cinema.action.CinemaRemoveMovie;
+import ua.com.cinema.action.CinemaRemoveSeance;
+import ua.com.cinema.action.CinemaShowSchedule;
 import ua.com.cinema.models.Cinema;
 import ua.com.cinema.models.Movie;
 import ua.com.cinema.models.Time;
 
 public class CinemaGuiMain {
 
-	static Cinema palace = new Cinema(new Time(8, 30), new Time(23, 30));
+	 public static Cinema palace = new Cinema(new Time(8, 30), new Time(23, 30));
 
 	public static void main(String[] args) {
 
@@ -150,7 +155,7 @@ public class CinemaGuiMain {
 		frame.getContentPane().add(btnShowSchedule);
 
 		JLabel lblNewLabel = new JLabel("");
-		ImageIcon img = new ImageIcon(this.getClass().getResource("/oscar.png").getFile());
+		ImageIcon img = new ImageIcon(this.getClass().getResource("/img/oscar.png").getFile());
 		lblNewLabel.setIcon(img);
 		lblNewLabel.setBounds(245, 11, 487, 408);
 		frame.getContentPane().add(lblNewLabel);

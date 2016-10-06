@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import ua.com.cinema.main.CinemaGuiMain;
 import ua.com.cinema.models.Cinema;
 import ua.com.cinema.models.Movie;
 import ua.com.cinema.models.Seance;

@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
 public class CinemaShowSchedule {
 
 	private JFrame frame;
-	static JTextArea textArea;
+	public static JTextArea textArea;
 	private JLabel label_1;
 	private JScrollPane scrollPane_1;
 
