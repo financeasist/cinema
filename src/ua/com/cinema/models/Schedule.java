@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Schedule {
+
 	public Set<Seance> set;
 
 	public Schedule() {
@@ -19,7 +20,6 @@ public class Schedule {
 
 	public void addSeans(Seance seance) {
 		set.add(seance);
-
 	}
 
 	public Set<Seance> getSet() {
@@ -33,6 +33,7 @@ public class Schedule {
 	@Override
 	public String toString() {
 		String out = "";
+
 		if (set.isEmpty()) {
 
 			return "Ви ще не добавили жодного сеансу! Будьласка, заповніть розклад сеансами!";
