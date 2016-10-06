@@ -12,13 +12,13 @@ import ua.com.cinema.enums.Days;
 public class Cinema {
 
 	private TreeMap<Days, Schedule> map;
-	private Time open;
-	private Time close;
+	private Time timeOpen;
+	private Time timeClose;
 
 	public Cinema(Time open, Time close) {
 		this.map = new TreeMap<Days, Schedule>();
-		this.open = open;
-		this.close = close;
+		this.timeOpen = open;
+		this.timeClose = close;
 		Days[] days = Days.values();
 
 		for (int i = 0; i < days.length; i++) {
@@ -55,8 +55,8 @@ public class Cinema {
 	}
 
 	public boolean checkTime(Time start, Time end) {
-		boolean isCorrectStartTime = start.compareTo(open) == 1;
-		boolean isCorrectEndTime = end.compareTo(close) == -1;
+		boolean isCorrectStartTime = start.compareTo(timeOpen) == 1;
+		boolean isCorrectEndTime = end.compareTo(timeClose) == -1;
 
 		return (isCorrectStartTime && isCorrectEndTime) ? true : false;
 	}
@@ -95,8 +95,8 @@ public class Cinema {
 
 	@Override
 	public String toString() {
-		String out1 = "~~~~~~~~~~~~~~~~~~CINEMA~~~~~~~~~~~~~~~~\n" + "~~~WORKING EVERYDAY FROM " + this.open.toString()
-				+ " TO " + this.close.toString() + "~~~\n";
+		String out1 = "~~~~~~~~~~~~~~~~~~CINEMA~~~~~~~~~~~~~~~~\n" + "~~~WORKING EVERYDAY FROM " + this.timeOpen.toString()
+				+ " TO " + this.timeClose.toString() + "~~~\n";
 
 		Iterator<Map.Entry<Days, Schedule>> iter = map.entrySet().iterator();
 		String out = "";
