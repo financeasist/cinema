@@ -40,20 +40,19 @@ public class CinemaAddNewFilm1 {
 	}
 
 	private JFrame frame;
-
 	private JPanel contentPane;
 	private JTextField textFieldStartTime1HH;
 	private JTextField textFieldStartTime1Mm;
-	Cinema palace = CinemaGuiMain.palace;
-
 	private String titleCin = CinemaAddNewFilmStartWindow.titleFilm;
 	private Integer durationCinH = CinemaAddNewFilmStartWindow.durationCinH;
 	private Integer durationCinM = CinemaAddNewFilmStartWindow.durationCinM;
 	private Integer startH1;
 	private Integer startM1;
 	private JLabel label_1;
-
 	private JLabel lblNewLabel;
+	
+	Cinema palace = CinemaGuiMain.palace;
+	
 	/**
 	 * Create the frame.
 	 * 
