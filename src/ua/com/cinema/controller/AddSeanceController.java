@@ -1,10 +1,5 @@
-package ua.com.cinema.action;
+package ua.com.cinema.controller;
 
-/**
-*
-* @author RomanGrupskyi;
-*/
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,29 +13,12 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import ua.com.cinema.main.CinemaGuiMain;
-import ua.com.cinema.models.Cinema;
 import ua.com.cinema.models.Movie;
 import ua.com.cinema.models.Seance;
 import ua.com.cinema.models.Time;
+import ua.com.cinema.service.CinemaService;
 
-public class CinemaAddSeance {
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CinemaAddSeance cinemaSeance = new CinemaAddSeance();
-					cinemaSeance.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+public class AddSeanceController {
 
 	private JFrame frame;
 	private JPanel contentPane;
@@ -51,7 +29,6 @@ public class CinemaAddSeance {
 	private JTextField textFieldSeanceStartTimeHH;
 	private JTextField textFieldStartTimeFilmSeanceMm;
 
-	Cinema palace = CinemaGuiMain.palace;
 	private String titleCin;
 	private Integer durationCinH;
 	private Integer durationCinM;
@@ -66,19 +43,15 @@ public class CinemaAddSeance {
 
 	private JLabel label_3;
 
-	public JFrame getFrame() {
-		return frame;
-	}
-
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
-
 	/**
 	 * Create the frame.
 	 */
-	public CinemaAddSeance() {
-
+	public AddSeanceController() {
+		buildFrame();
+		initController();
+	}
+	public void buildFrame(){
+			
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 		frame.setTitle("**@author RomanGrupskyi");
@@ -89,6 +62,11 @@ public class CinemaAddSeance {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
+	}
+	/**
+	 * init Controller
+	 */
+	public void initController(){
 
 		JLabel labelDayForSeance = new JLabel("Введіть день в який хочете додати сеанс (англ!):");
 		labelDayForSeance.setBounds(10, 11, 302, 25);
@@ -138,6 +116,7 @@ public class CinemaAddSeance {
 
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.addActionListener(new ActionListener() {
+			CinemaService cinemaService = new CinemaService(CinemaGuiMain.palace);
 			public void actionPerformed(ActionEvent e) {
 				try {
 
@@ -151,7 +130,7 @@ public class CinemaAddSeance {
 					Time durationTime = new Time(durationCinH, durationCinM);
 					Time seancestartTime = new Time(seanceH, seanceM);
 					
-					CinemaGuiMain.palace.addSeance(day,
+					cinemaService.addSeance(day,
 							new Seance(new Movie(titleCin, durationTime), seancestartTime));
 					JOptionPane.showMessageDialog(null,
 							"сеанс  фільму '" + titleCin + "' в " + day + " o " + seancestartTime.toString()
@@ -193,5 +172,11 @@ public class CinemaAddSeance {
 		contentPane.add(label_3);
 		frame.setVisible(true);
 	}
+	public JFrame getFrame() {
+		return frame;
+	}
 
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
 }

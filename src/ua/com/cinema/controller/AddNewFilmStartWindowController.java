@@ -1,9 +1,5 @@
-package ua.com.cinema.action;
-/**
-*
-* @author RomanGrupskyi;
-*/
-import java.awt.EventQueue;
+package ua.com.cinema.controller;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,54 +11,41 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
-import ua.com.cinema.main.CinemaGuiMain;
-import ua.com.cinema.models.Cinema;
-
-public class CinemaAddNewFilmStartWindow {
+/**
+ * 
+ * This class creates a start window for add new movie and checks how many seances 
+ * user wants to  create for every day.
+ * and creates appropriate 'addNewFilmController' for this count.
+ * version 1.2 10 Oct 2016
+ * @author RomanGupskyi
+ *
+ */
+public class AddNewFilmStartWindowController {
 
 	static String titleFilm;
 	static Integer durationCinH;
 	static Integer durationCinM;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CinemaAddNewFilmStartWindow cinemaAddNewFilmStartWindow = new CinemaAddNewFilmStartWindow();
-					cinemaAddNewFilmStartWindow.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	private JFrame frame;
-
 	private JPanel contentPane;
 	private JTextField textFieldCountSeance;
 	private JTextField textFieldDurationFilmHH;
 	private JTextField textFieldDurationFilmMm;
-	
-	Cinema palace = CinemaGuiMain.palace;
-
-	Integer keyCheck;
+	static Integer keyCheck;
 	private JLabel label;
 	private JLabel label_1;
 	private JLabel lblNewLabel;
-	
+
 	private JTextField textFieldFilmName;
 
 	/**
-	 * Create the frame.
-	 * 
-	 * @wbp.parser.entryPoint
+	 * Creates the frame.
 	 */
-	public CinemaAddNewFilmStartWindow() {
+	public AddNewFilmStartWindowController() {
+		buildFrame();
+		initController();
+	}
 
+	private void buildFrame() {
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 		frame.setTitle("**@author RomanGrupskyi");
@@ -73,7 +56,9 @@ public class CinemaAddNewFilmStartWindow {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
+	}
 
+	private void initController() {
 		JLabel labelFilmName = new JLabel("Введіть назву фільму :");
 		labelFilmName.setBounds(10, 11, 189, 25);
 		contentPane.add(labelFilmName);
@@ -100,7 +85,10 @@ public class CinemaAddNewFilmStartWindow {
 		textFieldDurationFilmMm.setBounds(292, 47, 40, 25);
 		contentPane.add(textFieldDurationFilmMm);
 		textFieldDurationFilmMm.setColumns(10);
-
+/**
+ * checks how many seances user wants to  create in every day,
+ * and creates appropriate addNewFilmController for this count.
+ */
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -113,39 +101,25 @@ public class CinemaAddNewFilmStartWindow {
 
 					switch (keyCheck) {
 					case 1:
-						CinemaAddNewFilm1 cinemaAddNewFilm1 = new CinemaAddNewFilm1();
-						cinemaAddNewFilm1.getFrame().setVisible(true);
+						AddNewFilmController addNewFilmController = new AddNewFilmController(1);
+						addNewFilmController.getFrame().setVisible(true);
 
 						break;
 
 					case 2:
-						 CinemaAddNewFilm2 cinemaAddNewFilm2 = new CinemaAddNewFilm2();
-						 cinemaAddNewFilm2.getFrame().setVisible(true);
+						AddNewFilmController addNewFilmController2 = new AddNewFilmController(2);
+						addNewFilmController2.getFrame().setVisible(true);
 
 						break;
 					case 3:
-						 CinemaAddNewFilm3 cinemaAddNewFilm3 = new CinemaAddNewFilm3();
-						 cinemaAddNewFilm3.getFrame().setVisible(true);
+						AddNewFilmController addNewFilmController3 = new AddNewFilmController(3);
+						addNewFilmController3.getFrame().setVisible(true);
 
-						 break;
+						break;
 
 					default:
 						JOptionPane.showMessageDialog(null, "Введіть 1, 2 або 3!");
 						break;
-					// startH1 =
-					// Integer.parseInt(textFieldStartTimeHH.getText());
-					//
-					// startM1 =
-					// Integer.parseInt(textFieldStartTimeFilmMm.getText());
-					//
-
-					// palace.removeSeance( new Seance(new Movie(titleCin, new
-					// Time(durationCinH, durationCinM)), new Time(seanceH,
-					// seanceM)));
-					// JOptionPane.showMessageDialog(null,"сеанс фільму " +
-					// titleCin + " в " + " видалено!");
-					// frame.dispose();
-
 					}
 					frame.dispose();
 				} catch (Exception e1) {
@@ -167,7 +141,7 @@ public class CinemaAddNewFilmStartWindow {
 		lblNewLabel = new JLabel("   хв");
 		lblNewLabel.setBounds(327, 58, 31, 14);
 		contentPane.add(lblNewLabel);
-		
+
 		textFieldFilmName = new JTextField();
 		textFieldFilmName.setBounds(209, 13, 123, 23);
 		contentPane.add(textFieldFilmName);

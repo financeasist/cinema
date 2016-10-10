@@ -1,8 +1,5 @@
 package ua.com.cinema.main;
-/**
-*
-* @author RomanGrupskyi;
-*/
+
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -14,19 +11,24 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import ua.com.cinema.action.CinemaAddNewFilmStartWindow;
-import ua.com.cinema.action.CinemaAddSeance;
-import ua.com.cinema.action.CinemaRemoveMovie;
-import ua.com.cinema.action.CinemaRemoveSeance;
-import ua.com.cinema.action.CinemaShowSchedule;
+import ua.com.cinema.controller.AddNewFilmStartWindowController;
+import ua.com.cinema.controller.AddSeanceController;
+import ua.com.cinema.controller.RemoveMovieController;
+import ua.com.cinema.controller.RemoveSeanceController;
+import ua.com.cinema.controller.ShowSchedule;
 import ua.com.cinema.models.Cinema;
 import ua.com.cinema.models.Movie;
 import ua.com.cinema.models.Time;
+import ua.com.cinema.service.CinemaService;
 
 public class CinemaGuiMain {
 
-	 public static Cinema palace = new Cinema(new Time(8, 30), new Time(23, 30));
+	private JFrame frame;
+	public static Cinema palace = new Cinema(new Time(8, 30), new Time(23, 30));
 
+	/**
+	 * Launch the application.
+	 */
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable() {
@@ -40,8 +42,6 @@ public class CinemaGuiMain {
 			}
 		});
 	}
-
-	private JFrame frame;
 
 	/**
 	 * Create the application.
@@ -64,7 +64,7 @@ public class CinemaGuiMain {
 		JButton btnAddnewFilm = new JButton("Додати фільм з сеансами");
 		btnAddnewFilm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CinemaAddNewFilmStartWindow cinemaAddNewFilm = new CinemaAddNewFilmStartWindow();
+				AddNewFilmStartWindowController cinemaAddNewFilm = new AddNewFilmStartWindowController();
 				cinemaAddNewFilm.getFrame().setVisible(true);
 			}
 		});
@@ -74,8 +74,8 @@ public class CinemaGuiMain {
 		JButton btnAddNewSeance = new JButton("Додати сеанс");
 		btnAddNewSeance.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CinemaAddSeance cinemaAddSeance = new CinemaAddSeance();
-				cinemaAddSeance.getFrame().setVisible(true);
+				AddSeanceController addSeanceController = new AddSeanceController();
+				addSeanceController.getFrame().setVisible(true);
 			}
 		});
 		btnAddNewSeance.setBounds(35, 100, 200, 50);
@@ -85,8 +85,8 @@ public class CinemaGuiMain {
 		btnRemoveFilmFromList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					CinemaRemoveMovie cinemaRemoveMovie = new CinemaRemoveMovie();
-					cinemaRemoveMovie.getFrame().setVisible(true);
+					RemoveMovieController removeMovieController = new RemoveMovieController();
+					removeMovieController.getFrame().setVisible(true);
 
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1);
@@ -94,7 +94,7 @@ public class CinemaGuiMain {
 
 			}
 		});
-		
+
 		btnRemoveFilmFromList.setBounds(35, 171, 200, 50);
 		frame.getContentPane().add(btnRemoveFilmFromList);
 
@@ -102,9 +102,9 @@ public class CinemaGuiMain {
 		btnRemoveSeance.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					
-					CinemaRemoveSeance cinGuiRemoveSeance = new CinemaRemoveSeance();
-					 cinGuiRemoveSeance.getFrame().setVisible(true);
+
+					RemoveSeanceController cinGuiRemoveSeance = new RemoveSeanceController();
+					cinGuiRemoveSeance.getFrame().setVisible(true);
 
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1);
@@ -117,13 +117,16 @@ public class CinemaGuiMain {
 
 		JButton btnSetPrepaireSchedule = new JButton("Заповнити розклад улюбленими фільмами");
 		btnSetPrepaireSchedule.addActionListener(new ActionListener() {
+			CinemaService cinemaService = new CinemaService(palace);
+
 			public void actionPerformed(ActionEvent e) {
 				try {
-					palace.addMovie(new Movie("Transformers 2", new Time(2, 34)), new Time(10, 20), new Time(20, 10));
-					palace.addMovie(new Movie("Heaven's kingdom", new Time(2, 12)), new Time(9, 10));
-					palace.addMovie(new Movie("Lion King", new Time(1, 36)), new Time(14, 50), new Time(16, 0),
+					cinemaService.addMovie(new Movie("Transformers 2", new Time(2, 34)), new Time(10, 20),
+							new Time(20, 10));
+					cinemaService.addMovie(new Movie("Heaven's kingdom", new Time(2, 12)), new Time(9, 10));
+					cinemaService.addMovie(new Movie("Lion King", new Time(1, 36)), new Time(14, 50), new Time(16, 0),
 							new Time(8, 30));
-					palace.addMovie(new Movie("Hobbit 2", new Time(2, 48)), new Time(12, 45), new Time(22, 15));
+					cinemaService.addMovie(new Movie("Hobbit 2", new Time(2, 48)), new Time(12, 45), new Time(22, 15));
 					JOptionPane.showMessageDialog(null, "films succsessfully edded to schedule!" + "\n"
 							+ "натисніть 'показати розклад' щоб вивести розклад на екран!");
 
@@ -141,10 +144,10 @@ public class CinemaGuiMain {
 			public void actionPerformed(ActionEvent e) {
 				try {
 
-					CinemaShowSchedule cinemaShowSchedule = new CinemaShowSchedule();
-					cinemaShowSchedule.getFrame().setVisible(true);
+					ShowSchedule showSchedule = new ShowSchedule();
+					showSchedule.getFrame().setVisible(true);
 
-					CinemaShowSchedule.textArea.setText(palace.toString());
+					ShowSchedule.textArea.setText(palace.toString());
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1);
 				}
@@ -159,7 +162,6 @@ public class CinemaGuiMain {
 		lblNewLabel.setIcon(img);
 		lblNewLabel.setBounds(245, 11, 487, 408);
 		frame.getContentPane().add(lblNewLabel);
-		
 
 	}
 }

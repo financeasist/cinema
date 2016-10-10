@@ -1,9 +1,5 @@
-package ua.com.cinema.action;
-/**
-*
-* @author RomanGrupskyi;
-*/
-import java.awt.EventQueue;
+package ua.com.cinema.controller;
+
 import java.awt.Font;
 
 import javax.swing.JFrame;
@@ -11,41 +7,17 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class CinemaShowSchedule {
+public class ShowSchedule {
 
-	private JFrame frame;
 	public static JTextArea textArea;
+	private JFrame frame;
 	private JLabel label_1;
 	private JScrollPane scrollPane_1;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CinemaShowSchedule window = new CinemaShowSchedule();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public JFrame getFrame() {
-		return frame;
-	}
-
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
-
-	/**
 	 * Create the Frame
 	 */
-	public CinemaShowSchedule() {
+	public ShowSchedule() {
 
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
@@ -53,8 +25,6 @@ public class CinemaShowSchedule {
 		frame.setBounds(100, 100, 383, 472);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		// JScrollPane scrollPane=new JScrollPane();
-		// frame.getContentPane().add(scrollPane);
 
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(10, 23, 347, 400);
@@ -68,4 +38,13 @@ public class CinemaShowSchedule {
 		label_1.setBounds(154, 7, 67, 14);
 		frame.getContentPane().add(label_1);
 	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
 }

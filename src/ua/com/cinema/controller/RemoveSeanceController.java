@@ -1,10 +1,5 @@
-package ua.com.cinema.action;
+package ua.com.cinema.controller;
 
-/**
-*
-* @author RomanGrupskyi;
-*/
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,29 +13,12 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import ua.com.cinema.main.CinemaGuiMain;
-import ua.com.cinema.models.Cinema;
 import ua.com.cinema.models.Movie;
 import ua.com.cinema.models.Seance;
 import ua.com.cinema.models.Time;
+import ua.com.cinema.service.CinemaService;
 
-public class CinemaRemoveSeance {
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CinemaRemoveSeance cinemaRemoveSeance = new CinemaRemoveSeance();
-					cinemaRemoveSeance.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+public class RemoveSeanceController {
 
 	private JFrame frame;
 	private JPanel contentPaneRemoveSeance;
@@ -51,7 +29,6 @@ public class CinemaRemoveSeance {
 	private JTextField textFieldRemoveSeanceStartTimeHH;
 	private JTextField textFieldStartTimeFilmToRemoveSeanceMm;
 
-	Cinema palace = CinemaGuiMain.palace;
 	private String titleCin;
 	private Integer durationCinH;
 	private Integer durationCinM;
@@ -66,19 +43,15 @@ public class CinemaRemoveSeance {
 
 	private JLabel label_3;
 
-	public JFrame getFrame() {
-		return frame;
-	}
-
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
-
 	/**
 	 * Create the frame.
 	 */
-	public CinemaRemoveSeance() {
+	public RemoveSeanceController() {
+		buildFrame();
+		initController();
+	}
 
+	private void buildFrame() {
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 		frame.setTitle("**@author RomanGrupskyi");
@@ -89,7 +62,12 @@ public class CinemaRemoveSeance {
 		contentPaneRemoveSeance.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.setContentPane(contentPaneRemoveSeance);
 		contentPaneRemoveSeance.setLayout(null);
+	}
 
+	/**
+	 * init Controller
+	 */
+	private void initController() {
 		JLabel labelDayForRemoveSeance = new JLabel("Введіть день сеансу для видаленя з розкладу:");
 		labelDayForRemoveSeance.setBounds(10, 11, 302, 25);
 		contentPaneRemoveSeance.add(labelDayForRemoveSeance);
@@ -138,6 +116,8 @@ public class CinemaRemoveSeance {
 
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.addActionListener(new ActionListener() {
+			CinemaService cinemaService = new CinemaService(CinemaGuiMain.palace);
+
 			public void actionPerformed(ActionEvent e) {
 				try {
 
@@ -152,7 +132,7 @@ public class CinemaRemoveSeance {
 					seanceH = Integer.parseInt(textFieldRemoveSeanceStartTimeHH.getText());
 					seanceM = Integer.parseInt(textFieldStartTimeFilmToRemoveSeanceMm.getText());
 					Time seancestartTime = new Time(seanceH, seanceM);
-					palace.removeSeance(day,
+					cinemaService.removeSeance(day,
 							new Seance(new Movie(titleCin, new Time(durationCinH, durationCinM)), seancestartTime));
 					JOptionPane.showMessageDialog(null, "сеанс  фільму '" + titleCin + "' в " + day + " o "
 							+ seancestartTime.toString() + " видалено!");
@@ -193,4 +173,11 @@ public class CinemaRemoveSeance {
 		frame.setVisible(true);
 	}
 
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
 }
