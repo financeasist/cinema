@@ -25,16 +25,6 @@ public class Seance implements Comparable<Seance> {
 		}
 	}
 
-	public static Time endingTime(Time start, Time duration) { // determines
-																// seance ending
-																// time //
-																// endTime
-		int endTimeHour = start.getHour() + duration.getHour();
-		int endTimeMin = start.getMin() + duration.getMin();
-
-		return new Time(endTimeHour, endTimeMin);
-	}
-
 	public Time getEndTime() {
 		return endTime;
 	}

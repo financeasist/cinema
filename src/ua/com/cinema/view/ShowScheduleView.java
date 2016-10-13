@@ -1,4 +1,4 @@
-package ua.com.cinema.controller;
+package ua.com.cinema.view;
 
 import java.awt.Font;
 
@@ -7,7 +7,13 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class ShowSchedule {
+/**
+ *This class shows the actual schedule
+ * version 1.2 10 Oct 2016
+ * 
+ * @author RomanGupskyi
+ */
+public class ShowScheduleView {
 
 	public static JTextArea textArea;
 	private JFrame frame;
@@ -17,7 +23,7 @@ public class ShowSchedule {
 	/**
 	 * Create the Frame
 	 */
-	public ShowSchedule() {
+	public ShowScheduleView() {
 
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));

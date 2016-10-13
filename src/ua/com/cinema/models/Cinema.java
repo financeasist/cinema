@@ -3,6 +3,7 @@ package ua.com.cinema.models;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.HashMap;
 
 import ua.com.cinema.enums.Days;
 
@@ -60,7 +61,7 @@ public class Cinema {
 	}
 
 	/**
-	 * method toString() - shows schedule for ich day.
+	 * method toString() - shows schedule for each day.
 	 */
 	@Override
 	public String toString() {

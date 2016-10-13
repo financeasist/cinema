@@ -1,29 +1,35 @@
 package ua.com.cinema.main;
 
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import ua.com.cinema.controller.AddNewFilmStartWindowController;
+import ua.com.cinema.controller.AddMovieController;
 import ua.com.cinema.controller.AddSeanceController;
 import ua.com.cinema.controller.RemoveMovieController;
 import ua.com.cinema.controller.RemoveSeanceController;
-import ua.com.cinema.controller.ShowSchedule;
 import ua.com.cinema.models.Cinema;
 import ua.com.cinema.models.Movie;
 import ua.com.cinema.models.Time;
 import ua.com.cinema.service.CinemaService;
+import ua.com.cinema.view.CinemaGuiMainView;
+import ua.com.cinema.view.ShowScheduleView;
+
+/**
+ * This is the main class for GUI application;
+ * 
+ * version 1.2 12 Oct 2016
+ * @author RomanGrupskiy
+ */
 
 public class CinemaGuiMain {
 
 	private JFrame frame;
+	private CinemaGuiMainView view;
 	public static Cinema palace = new Cinema(new Time(8, 30), new Time(23, 30));
 
 	/**
@@ -44,9 +50,11 @@ public class CinemaGuiMain {
 	}
 
 	/**
-	 * Create the application.
+	 * Called JFrame from CinemaGuiMainView for this class.
 	 */
 	public CinemaGuiMain() {
+		view = new CinemaGuiMainView();
+		frame = view.getFrame();
 		initialize();
 	}
 
@@ -54,17 +62,11 @@ public class CinemaGuiMain {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
-		frame.setTitle("**@author RomanGrupskyi");
-		frame.setBounds(100, 100, 758, 468);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
 
 		JButton btnAddnewFilm = new JButton("Додати фільм з сеансами");
 		btnAddnewFilm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddNewFilmStartWindowController cinemaAddNewFilm = new AddNewFilmStartWindowController();
+				AddMovieController cinemaAddNewFilm = new AddMovieController();
 				cinemaAddNewFilm.getFrame().setVisible(true);
 			}
 		});
@@ -144,10 +146,10 @@ public class CinemaGuiMain {
 			public void actionPerformed(ActionEvent e) {
 				try {
 
-					ShowSchedule showSchedule = new ShowSchedule();
-					showSchedule.getFrame().setVisible(true);
+					ShowScheduleView showScheduleView = new ShowScheduleView();
+					showScheduleView.getFrame().setVisible(true);
 
-					ShowSchedule.textArea.setText(palace.toString());
+					ShowScheduleView.textArea.setText(palace.toString());
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1);
 				}
@@ -156,12 +158,6 @@ public class CinemaGuiMain {
 		});
 		btnShowSchedule.setBounds(35, 362, 200, 50);
 		frame.getContentPane().add(btnShowSchedule);
-
-		JLabel lblNewLabel = new JLabel("");
-		ImageIcon img = new ImageIcon(this.getClass().getResource("/img/oscar.png").getFile());
-		lblNewLabel.setIcon(img);
-		lblNewLabel.setBounds(245, 11, 487, 408);
-		frame.getContentPane().add(lblNewLabel);
 
 	}
 }

@@ -1,7 +1,7 @@
 package ua.com.cinema.service;
 
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.HashMap;
 
 import ua.com.cinema.enums.Days;
 import ua.com.cinema.models.Cinema;
@@ -59,14 +59,13 @@ public class CinemaService {
 	 * @param seance
 	 */
 	public void addSeance(String nameOFDay, Seance seance) {
-		Days[] days = Days.values();
+		
+		for (Days day: Days.values()) {
 
-		for (int i = 0; i < days.length; i++) {
-
-			if (nameOFDay.equalsIgnoreCase((days[i]).toString())) {
+			if (nameOFDay.equalsIgnoreCase((day).toString())) {
 
 				if (checkTime(seance.getStartTime(), seance.getEndTime())) {
-					cinema.getWeeklySchedule().get(days[i]).addSeans(seance);
+					cinema.getWeeklySchedule().get(day).addSeans(seance);
 				}
 			}
 		}
@@ -98,7 +97,7 @@ public class CinemaService {
 		Days[] days = Days.values();
 
 		for (int i = 0; i < days.length; i++) {
-			Iterator<Seance> iter = cinema.getWeeklySchedule().get(days[i]).getSet().iterator();
+			Iterator<Seance> iter = cinema.getWeeklySchedule().get(days[i]).getSchedule().iterator();
 
 			while (iter.hasNext()) {
 
@@ -112,16 +111,16 @@ public class CinemaService {
 	 * method removeSeance - removes accepted seance by day, accepted in
 	 * parameter;
 	 * 
-	 * @param str
+	 * @param nameOfDay
 	 * @param seance
 	 */
-	public void removeSeance(String str, Seance seance) {
+	public void removeSeance(String nameOfDay, Seance seance) {
 		Days[] day = Days.values();
 
 		for (int i = 0; i < day.length; i++) {
 
-			if (str.equalsIgnoreCase(day[i].toString())) {
-				Iterator<Seance> iter = cinema.getWeeklySchedule().get(day[i]).getSet().iterator();
+			if (nameOfDay.equalsIgnoreCase(day[i].toString())) {
+				Iterator<Seance> iter = cinema.getWeeklySchedule().get(day[i]).getSchedule().iterator();
 
 				while (iter.hasNext()) {
 

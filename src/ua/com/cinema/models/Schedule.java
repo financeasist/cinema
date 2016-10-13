@@ -11,34 +11,38 @@ import java.util.TreeSet;
 
 public class Schedule {
 
-	public Set<Seance> set;
+	public Set<Seance> schedule;
 
 	public Schedule() {
-		this.set = new TreeSet<Seance>();
+		this.schedule = new TreeSet<Seance>();
 
 	}
-
+	
 	public void addSeans(Seance seance) {
-		set.add(seance);
+		schedule.add(seance);
 	}
-
-	public Set<Seance> getSet() {
-		return set;
-	}
-
 	public void removeSeance(Seance seance) {
-		set.remove(seance);
+		schedule.remove(seance);
 	}
+	
+	public Set<Seance> getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(TreeSet<Seance> schedule) {
+		this.schedule = schedule;
+	}
+	
 
 	@Override
 	public String toString() {
 		String out = "";
 
-		if (set.isEmpty()) {
+		if (schedule.isEmpty()) {
 
 			return "Ви ще не добавили жодного сеансу! Будьласка, заповніть розклад сеансами!";
 		} else {
-			Iterator<Seance> iter = set.iterator();
+			Iterator<Seance> iter = schedule.iterator();
 
 			while (iter.hasNext())
 				out += iter.next().toString();
