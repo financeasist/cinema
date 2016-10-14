@@ -1,68 +1,41 @@
-package ua.com.cinema.action;
-/**
-*
-* @author RomanGrupskyi;
-*/
-import java.awt.EventQueue;
+package ua.com.cinema.view;
+
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import ua.com.cinema.main.CinemaGuiMain;
-import ua.com.cinema.models.Cinema;
+/**
+ * This class creates a start window (view) for add new movie and checks how
+ * many seances user wants to create for every day. 
+ * 
+ * @version 1.2 10 Oct 2016
+ * @author RomanGupskyi
+ */
 
-public class CinemaAddNewFilmStartWindow {
+public class AddMovieView {
 
-	static String titleFilm;
-	static Integer durationCinH;
-	static Integer durationCinM;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CinemaAddNewFilmStartWindow cinemaAddNewFilmStartWindow = new CinemaAddNewFilmStartWindow();
-					cinemaAddNewFilmStartWindow.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	private JFrame frame;
-
+	private JButton btnSubmit;
 	private JPanel contentPane;
 	private JTextField textFieldCountSeance;
 	private JTextField textFieldDurationFilmHH;
 	private JTextField textFieldDurationFilmMm;
-	
-	Cinema palace = CinemaGuiMain.palace;
 
-	Integer keyCheck;
 	private JLabel label;
 	private JLabel label_1;
 	private JLabel lblNewLabel;
-	
+
 	private JTextField textFieldFilmName;
 
 	/**
-	 * Create the frame.
-	 * 
-	 * @wbp.parser.entryPoint
+	 * creates a frame
 	 */
-	public CinemaAddNewFilmStartWindow() {
-
+	public AddMovieView() {
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 		frame.setTitle("**@author RomanGrupskyi");
@@ -74,6 +47,14 @@ public class CinemaAddNewFilmStartWindow {
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+		initViewConponents();
+	}
+
+	/**
+	 * adds a view components to frame.
+	 */
+
+	private void initViewConponents() {
 		JLabel labelFilmName = new JLabel("Введіть назву фільму :");
 		labelFilmName.setBounds(10, 11, 189, 25);
 		contentPane.add(labelFilmName);
@@ -101,61 +82,6 @@ public class CinemaAddNewFilmStartWindow {
 		contentPane.add(textFieldDurationFilmMm);
 		textFieldDurationFilmMm.setColumns(10);
 
-		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-
-					titleFilm = textFieldFilmName.getText();
-					durationCinH = Integer.parseInt(textFieldDurationFilmHH.getText());
-					durationCinM = Integer.parseInt(textFieldDurationFilmMm.getText());
-					keyCheck = Integer.parseInt(textFieldCountSeance.getText());
-
-					switch (keyCheck) {
-					case 1:
-						CinemaAddNewFilm1 cinemaAddNewFilm1 = new CinemaAddNewFilm1();
-						cinemaAddNewFilm1.getFrame().setVisible(true);
-
-						break;
-
-					case 2:
-						 CinemaAddNewFilm2 cinemaAddNewFilm2 = new CinemaAddNewFilm2();
-						 cinemaAddNewFilm2.getFrame().setVisible(true);
-
-						break;
-					case 3:
-						 CinemaAddNewFilm3 cinemaAddNewFilm3 = new CinemaAddNewFilm3();
-						 cinemaAddNewFilm3.getFrame().setVisible(true);
-
-						 break;
-
-					default:
-						JOptionPane.showMessageDialog(null, "Введіть 1, 2 або 3!");
-						break;
-					// startH1 =
-					// Integer.parseInt(textFieldStartTimeHH.getText());
-					//
-					// startM1 =
-					// Integer.parseInt(textFieldStartTimeFilmMm.getText());
-					//
-
-					// palace.removeSeance( new Seance(new Movie(titleCin, new
-					// Time(durationCinH, durationCinM)), new Time(seanceH,
-					// seanceM)));
-					// JOptionPane.showMessageDialog(null,"сеанс фільму " +
-					// titleCin + " в " + " видалено!");
-					// frame.dispose();
-
-					}
-					frame.dispose();
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, e1);
-				}
-			}
-		});
-		btnSubmit.setBounds(107, 129, 184, 41);
-		contentPane.add(btnSubmit);
-
 		label = new JLabel("  :");
 		label.setBounds(272, 47, 19, 25);
 		contentPane.add(label);
@@ -167,15 +93,21 @@ public class CinemaAddNewFilmStartWindow {
 		lblNewLabel = new JLabel("   хв");
 		lblNewLabel.setBounds(327, 58, 31, 14);
 		contentPane.add(lblNewLabel);
-		
+
 		textFieldFilmName = new JTextField();
 		textFieldFilmName.setBounds(209, 13, 123, 23);
 		contentPane.add(textFieldFilmName);
 		textFieldFilmName.setColumns(10);
 
+		btnSubmit = new JButton("Submit");
+		btnSubmit.setBounds(107, 129, 184, 41);
+		contentPane.add(btnSubmit);
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Getters and setters:
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
@@ -183,4 +115,77 @@ public class CinemaAddNewFilmStartWindow {
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
+
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public void setContentPane(JPanel contentPane) {
+		this.contentPane = contentPane;
+	}
+
+	public JTextField getTextFieldCountSeance() {
+		return textFieldCountSeance;
+	}
+
+	public void setTextFieldCountSeance(JTextField textFieldCountSeance) {
+		this.textFieldCountSeance = textFieldCountSeance;
+	}
+
+	public JTextField getTextFieldDurationFilmHH() {
+		return textFieldDurationFilmHH;
+	}
+
+	public void setTextFieldDurationFilmHH(JTextField textFieldDurationFilmHH) {
+		this.textFieldDurationFilmHH = textFieldDurationFilmHH;
+	}
+
+	public JTextField getTextFieldDurationFilmMm() {
+		return textFieldDurationFilmMm;
+	}
+
+	public void setTextFieldDurationFilmMm(JTextField textFieldDurationFilmMm) {
+		this.textFieldDurationFilmMm = textFieldDurationFilmMm;
+	}
+
+	public JLabel getLabel() {
+		return label;
+	}
+
+	public void setLabel(JLabel label) {
+		this.label = label;
+	}
+
+	public JLabel getLabel_1() {
+		return label_1;
+	}
+
+	public void setLabel_1(JLabel label_1) {
+		this.label_1 = label_1;
+	}
+
+	public JLabel getLblNewLabel() {
+		return lblNewLabel;
+	}
+
+	public void setLblNewLabel(JLabel lblNewLabel) {
+		this.lblNewLabel = lblNewLabel;
+	}
+
+	public JTextField getTextFieldFilmName() {
+		return textFieldFilmName;
+	}
+
+	public void setTextFieldFilmName(JTextField textFieldFilmName) {
+		this.textFieldFilmName = textFieldFilmName;
+	}
+
+	public JButton getBtnSubmit() {
+		return btnSubmit;
+	}
+
+	public void setBtnSubmit(JButton btnSubmit) {
+		this.btnSubmit = btnSubmit;
+	}
+
 }
