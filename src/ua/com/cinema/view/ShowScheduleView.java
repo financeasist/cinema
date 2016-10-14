@@ -8,9 +8,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
- *This class shows the actual schedule
- * version 1.2 10 Oct 2016
+ * This class creates a new window with textArea and other components (view) to
+ * show the actual schedule.
  * 
+ * @version 1.2 10 Oct 2016
  * @author RomanGupskyi
  */
 public class ShowScheduleView {
@@ -21,7 +22,7 @@ public class ShowScheduleView {
 	private JScrollPane scrollPane_1;
 
 	/**
-	 * Create the Frame
+	 * Creates the Window
 	 */
 	public ShowScheduleView() {
 
@@ -45,6 +46,9 @@ public class ShowScheduleView {
 		frame.getContentPane().add(label_1);
 	}
 
+	/**
+	 * getters and setters:
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}

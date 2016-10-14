@@ -1,7 +1,8 @@
 package ua.com.cinema.service;
 
 import java.util.Iterator;
-import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import ua.com.cinema.enums.Days;
 import ua.com.cinema.models.Cinema;
@@ -14,6 +15,7 @@ import ua.com.cinema.utils.SeanceUtils;
 /**
  * This class is service for class Cinema from package ua.com.cinema.models;
  * version 1.1 08 October 2016
+ * 
  * @author RomanGrupskyi;
  */
 
@@ -39,11 +41,11 @@ public class CinemaService {
 
 			for (Time startTime : times) {
 
-				Time endTime = SeanceUtils.calculateEndTime(startTime, movie.getDuration());
+				Time endTime = SeanceUtils.calculateEndTime(startTime, movie.getDurationTime());
 
 				if (checkTime(startTime, endTime)) {
 
-					HashMap<Days, Schedule> weeklyShedule = cinema.getWeeklySchedule();
+					Map<Days, Schedule> weeklyShedule = cinema.getWeeklySchedule();
 					Schedule schedule = weeklyShedule.get(day);
 					schedule.addSeans(new Seance(movie, startTime));
 				}
@@ -59,8 +61,8 @@ public class CinemaService {
 	 * @param seance
 	 */
 	public void addSeance(String nameOFDay, Seance seance) {
-		
-		for (Days day: Days.values()) {
+
+		for (Days day : Days.values()) {
 
 			if (nameOFDay.equalsIgnoreCase((day).toString())) {
 
@@ -72,11 +74,13 @@ public class CinemaService {
 	}
 
 	/**
-	 * method check startMovieTime and endMovieTime with cinema timeOpen and cinema timeClose;
+	 * method check startMovieTime and endMovieTime with cinema timeOpen and
+	 * cinema timeClose;
 	 * 
 	 * @param startMovieTime
 	 * @param endMovieTime
-	 * @return boolean for check this time with cinema timeOpen and cinema timeClose
+	 * @return boolean for check this time with cinema timeOpen and cinema
+	 *         timeClose
 	 */
 	boolean checkTime(Time startMovieTime, Time endMovieTime) {
 		boolean isCorrectStartTime = startMovieTime.compareTo(cinema.getTimeOpen()) == 1;
@@ -93,18 +97,24 @@ public class CinemaService {
 	 * @param end
 	 * @return
 	 */
-	public void removeMovie(String movie) {
-		Days[] days = Days.values();
+	public boolean removeMovie(String movieName) {
+		boolean isRemoved = false;
+		for (Days day : Days.values()) {
 
-		for (int i = 0; i < days.length; i++) {
-			Iterator<Seance> iter = cinema.getWeeklySchedule().get(days[i]).getSchedule().iterator();
+			Map<Days, Schedule> weeklySchedule = cinema.getWeeklySchedule();
+			Schedule schedule = weeklySchedule.get(day);
+			Set<Seance> seances = schedule.getSeances();
+			Iterator<Seance> iter = seances.iterator();
 
 			while (iter.hasNext()) {
 
-				if (iter.next().getMovie().getTitle().equals(movie))
+				if (iter.next().getMovie().getTitle().equals(movieName)) {
 					iter.remove();
+					isRemoved = true;
+				}
 			}
 		}
+		return isRemoved;
 	}
 
 	/**
@@ -120,8 +130,7 @@ public class CinemaService {
 		for (int i = 0; i < day.length; i++) {
 
 			if (nameOfDay.equalsIgnoreCase(day[i].toString())) {
-				Iterator<Seance> iter = cinema.getWeeklySchedule().get(day[i]).getSchedule().iterator();
-
+				Iterator<Seance> iter = cinema.getWeeklySchedule().get(day[i]).getSeances().iterator();
 				while (iter.hasNext()) {
 
 					if (iter.next().equals(seance)) {
@@ -132,6 +141,9 @@ public class CinemaService {
 		}
 	}
 
+	/**
+	 * Getters and setters:
+	 */
 	public Cinema getCinema() {
 		return cinema;
 	}

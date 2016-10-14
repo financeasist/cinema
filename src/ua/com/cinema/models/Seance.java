@@ -1,7 +1,11 @@
 package ua.com.cinema.models;
 
 /**
- *
+ * this class represents the model for seance of movie. has timeStart and
+ * timeEnd. has util class named SeanceUtils.java which calculates the movie's
+ * endTime.
+ * 
+ * @version 1.2 14 Oct 2016
  * @author RomanGrupskyi;
  */
 public class Seance implements Comparable<Seance> {
@@ -10,11 +14,17 @@ public class Seance implements Comparable<Seance> {
 	private Time startTime;
 	private Time endTime;
 
+	/**
+	 * get movie and startTime, and creates the seance
+	 * 
+	 * @param movie
+	 * @param startTime
+	 */
 	public Seance(Movie movie, Time startTime) {
 		this.movie = movie;
 		this.startTime = startTime;
-		int deltaMin = startTime.getMin() + movie.getDuration().getMin();
-		int deltaHour = startTime.getHour() + movie.getDuration().getHour();
+		int deltaMin = startTime.getMin() + movie.getDurationTime().getMin();
+		int deltaHour = startTime.getHour() + movie.getDurationTime().getHour();
 
 		if (deltaMin < 60) {
 			this.endTime = new Time(deltaHour, deltaMin);
@@ -25,6 +35,9 @@ public class Seance implements Comparable<Seance> {
 		}
 	}
 
+	/**
+	 * Getters and setters:
+	 */
 	public Time getEndTime() {
 		return endTime;
 	}
@@ -49,6 +62,9 @@ public class Seance implements Comparable<Seance> {
 		this.startTime = startTime;
 	}
 
+	/**
+	 * Compares 2 seances by startTime
+	 */
 	@Override
 	public int compareTo(Seance o) {
 
@@ -56,6 +72,9 @@ public class Seance implements Comparable<Seance> {
 
 	}
 
+	/**
+	 * Checks on equales two seances
+	 */
 	@Override
 	public boolean equals(Object obj) {
 
@@ -68,33 +87,32 @@ public class Seance implements Comparable<Seance> {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-
 		Seance other = (Seance) obj;
-
 		if (endTime == null) {
 			if (other.endTime != null) {
 				return false;
 			}
-		} else if (!endTime.equals(other.endTime)) {
+		} else if (!endTime.equals(other.endTime))
 			return false;
-		}
+
 		if (movie == null) {
-			if (other.movie != null) {
+			if (other.movie != null)
 				return false;
-			}
 		} else if (!movie.equals(other.movie)) {
 			return false;
 		}
 		if (startTime == null) {
-			if (other.startTime != null) {
+			if (other.startTime != null)
 				return false;
-			}
 		} else if (!startTime.equals(other.startTime)) {
 			return false;
 		}
 		return true;
 	}
 
+	/**
+	 * generates hash code;
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -105,6 +123,9 @@ public class Seance implements Comparable<Seance> {
 		return result;
 	}
 
+	/**
+	 * shows what kind of movie and when will be shown;
+	 */
 	public String toString() {
 
 		if (startTime.getMin() < 10) {

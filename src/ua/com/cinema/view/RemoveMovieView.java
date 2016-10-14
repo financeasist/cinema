@@ -2,23 +2,26 @@ package ua.com.cinema.view;
 
 import java.awt.Font;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 /**
- * this class - it's window design for RemoveMovieController.
+ * This class - it's a start window (view) for 'RemoveMovieController.java'.
+ * Creates a start window for remove movie, where user can write a title of
+ * movie, which he wants to remove;
  * 
- * version 1.2 10 Oct 2016
+ * @version 1.2 10 Oct 2016
  * @author RomanGupskyi
  */
 public class RemoveMovieView {
 
 	private JFrame frame;
 	private JTextField textField;
-
+	private JButton buttonSubmit;
 	/**
-	 * creates frame
+	 * creates the JFrame
 	 */
 	public RemoveMovieView() {
 		frame = new JFrame();
@@ -34,7 +37,7 @@ public class RemoveMovieView {
 	/**
 	 * adds a view components to frame
 	 */
-	
+
 	private void initViewConponents() {
 
 		JLabel lblFilmName = new JLabel("введіть назву фільму для видалення :");
@@ -46,10 +49,15 @@ public class RemoveMovieView {
 		textField.setBounds(240, 17, 132, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
-
+		buttonSubmit = new JButton("submit");
+		buttonSubmit.setBounds(139, 54, 122, 32);
+		frame.getContentPane().add(buttonSubmit);
 		frame.setVisible(true);
 	}
 
+	/**
+	 * getters and setters:
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
@@ -64,6 +72,14 @@ public class RemoveMovieView {
 
 	public void setTextField(JTextField textField) {
 		this.textField = textField;
+	}
+
+	public JButton getButtonSubmit() {
+		return buttonSubmit;
+	}
+
+	public void setBtnNewButton(JButton btnNewButton) {
+		this.buttonSubmit = btnNewButton;
 	}
 
 }

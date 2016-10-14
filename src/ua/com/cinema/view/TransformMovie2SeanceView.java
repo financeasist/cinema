@@ -10,6 +10,14 @@ import javax.swing.border.EmptyBorder;
 
 import ua.com.cinema.controller.TransformMovie2SeanceController;
 
+/**
+ * This class creates view for 'TransformMovie2SeanceController.java' where user
+ * enters data which 'TransformMovie2SeanceController' need for add movie to
+ * schedule.
+ * 
+ * @version 1.2 10 Oct 2016
+ * @author RomanGupskyi
+ */
 public class TransformMovie2SeanceView {
 
 	private JFrame frame;
@@ -25,6 +33,9 @@ public class TransformMovie2SeanceView {
 	private JTextField textFieldStartTime3HH;
 	private JTextField textFieldStartTime3Mm;
 
+	/**
+	 * Creates the Frame
+	 */
 	public TransformMovie2SeanceView() {
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
@@ -36,10 +47,15 @@ public class TransformMovie2SeanceView {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		initComponents(countSeances);
 	}
 
+	/**
+	 * adds a view components to frame.
+	 * 
+	 * @param countSeances
+	 */
 	private void initComponents(int countSeances) {
 		JLabel labelInfo = new JLabel("Ви вибрали кількість сеансів : " + countSeances);
 		labelInfo.setBounds(65, 11, 254, 25);
@@ -123,6 +139,10 @@ public class TransformMovie2SeanceView {
 		}
 	}
 
+	/**
+	 * getters and setters:
+	 * 
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}

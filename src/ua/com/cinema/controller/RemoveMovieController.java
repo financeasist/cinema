@@ -12,10 +12,10 @@ import ua.com.cinema.service.CinemaService;
 import ua.com.cinema.view.RemoveMovieView;
 
 /**
- * This class completely removes movie from schedule
+ * This class uses values from 'RemoveMovieView.java', and completely removes
+ * movie from schedule, which user had written in 'RemoveMovieView'.
  * 
- * version 1.2 10 Oct 2016
- * 
+ * @version 1.2 10 Oct 2016
  * @author RomanGupskyi
  */
 public class RemoveMovieController {
@@ -23,6 +23,7 @@ public class RemoveMovieController {
 	private JFrame frame;
 	private String filmName;
 	private RemoveMovieView view;
+	private JButton buttonSubmit;
 
 	/**
 	 * creates window for this class
@@ -32,28 +33,34 @@ public class RemoveMovieController {
 		frame = view.getFrame();
 		initController();
 	}
+
 	/**
-	 * it is actually a method that removes movie from schedule
+	 * it is actually a method which removes movie from schedule;
 	 */
 	private void initController() {
-		JButton btnNewButton = new JButton("submit");
-		btnNewButton.addActionListener(new ActionListener() {
+		buttonSubmit = view.getButtonSubmit();
+		buttonSubmit.addActionListener(new ActionListener() {
 			CinemaService cinemaService = new CinemaService(CinemaGuiMain.palace);
 
 			public void actionPerformed(ActionEvent e) {
 				try {
 					filmName = view.getTextField().getText();
-					cinemaService.removeMovie(filmName);
-					JOptionPane.showMessageDialog(null, "фільм '" + filmName + "' видалено з розкладу!");
+					boolean isRemoved = cinemaService.removeMovie(filmName);
+					if (isRemoved)
+						JOptionPane.showMessageDialog(null, "фільм '" + filmName + "' видалено з розкладу!");
+					else
+						JOptionPane.showMessageDialog(null, "фільму '" + filmName + "' в розкладі нема!");
 					frame.dispose();
 				} catch (Exception e1) {
 				}
 			}
 		});
-		btnNewButton.setBounds(139, 54, 122, 32);
-		frame.getContentPane().add(btnNewButton);
+
 	}
 
+	/**
+	 * here is getters and setters:
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}

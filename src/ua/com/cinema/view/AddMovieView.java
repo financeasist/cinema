@@ -2,6 +2,7 @@ package ua.com.cinema.view;
 
 import java.awt.Font;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -9,7 +10,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 /**
- * this class - it's window design for AddMovieController
+ * This class creates a start window (view) for add new movie and checks how
+ * many seances user wants to create for every day. 
  * 
  * @version 1.2 10 Oct 2016
  * @author RomanGupskyi
@@ -18,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 public class AddMovieView {
 
 	private JFrame frame;
+	private JButton btnSubmit;
 	private JPanel contentPane;
 	private JTextField textFieldCountSeance;
 	private JTextField textFieldDurationFilmHH;
@@ -46,11 +49,11 @@ public class AddMovieView {
 
 		initViewConponents();
 	}
-	
+
 	/**
 	 * adds a view components to frame.
 	 */
-	
+
 	private void initViewConponents() {
 		JLabel labelFilmName = new JLabel("Введіть назву фільму :");
 		labelFilmName.setBounds(10, 11, 189, 25);
@@ -96,9 +99,15 @@ public class AddMovieView {
 		contentPane.add(textFieldFilmName);
 		textFieldFilmName.setColumns(10);
 
+		btnSubmit = new JButton("Submit");
+		btnSubmit.setBounds(107, 129, 184, 41);
+		contentPane.add(btnSubmit);
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Getters and setters:
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
@@ -169,6 +178,14 @@ public class AddMovieView {
 
 	public void setTextFieldFilmName(JTextField textFieldFilmName) {
 		this.textFieldFilmName = textFieldFilmName;
+	}
+
+	public JButton getBtnSubmit() {
+		return btnSubmit;
+	}
+
+	public void setBtnSubmit(JButton btnSubmit) {
+		this.btnSubmit = btnSubmit;
 	}
 
 }

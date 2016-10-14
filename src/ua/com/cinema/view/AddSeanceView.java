@@ -2,35 +2,42 @@ package ua.com.cinema.view;
 
 import java.awt.Font;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * This class creates a start window (view)to add new seance to schedule in day
+ * witch user selected.
+ * 
+ * @version 1.2 10 Oct 2016
+ * @author RomanGupskyi
+ */
 public class AddSeanceView {
 
 	private JFrame frame;
 	private JPanel contentPane;
+	private JLabel label;
+	private JLabel label_1;
+	private JLabel label_2;
+	private JLabel label_3;
+	private JLabel label_4;
+	private JLabel label_5;
+	private JButton btnSubmit;
 	private JTextField textFieldDayToAddSeance;
 	private JTextField textFieldTitleFilm;
 	private JTextField textFieldDurationSeanceHH;
 	private JTextField textFieldDurationSeanceMm;
 	private JTextField textFieldSeanceStartTimeHH;
 	private JTextField textFieldStartTimeFilmSeanceMm;
-	
-	private JLabel label;
-	private JLabel label_1;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
-	private JLabel label_2;
-	private JLabel label_3;
-
 	/**
 	 * creates a frame
 	 */
 	public AddSeanceView() {
-		
+
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 		frame.setTitle("**@author RomanGrupskyi");
@@ -41,12 +48,17 @@ public class AddSeanceView {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+	
 		initViewConponents();
 	}
 
-	private void initViewConponents(){
-		
+	/**
+	 * adds a view components to frame.
+	 * here user can enter which movie and when he
+	 * wants to add.
+	 */
+	private void initViewConponents() {
+
 		JLabel labelDayForSeance = new JLabel("Введіть день в який хочете додати сеанс (англ!):");
 		labelDayForSeance.setBounds(10, 11, 302, 25);
 		contentPane.add(labelDayForSeance);
@@ -92,7 +104,7 @@ public class AddSeanceView {
 		textFieldStartTimeFilmSeanceMm.setBounds(375, 119, 40, 25);
 		contentPane.add(textFieldStartTimeFilmSeanceMm);
 		textFieldStartTimeFilmSeanceMm.setColumns(10);
-		
+
 		label = new JLabel("     :");
 		label.setBounds(339, 88, 46, 14);
 		contentPane.add(label);
@@ -101,13 +113,13 @@ public class AddSeanceView {
 		label_1.setBounds(312, 94, 46, 14);
 		contentPane.add(label_1);
 
-		lblNewLabel = new JLabel("   хв");
-		lblNewLabel.setBounds(416, 94, 46, 14);
-		contentPane.add(lblNewLabel);
+		label_4 = new JLabel("   хв");
+		label_4.setBounds(416, 94, 46, 14);
+		contentPane.add(label_4);
 
-		lblNewLabel_1 = new JLabel("   год");
-		lblNewLabel_1.setBounds(312, 130, 46, 14);
-		contentPane.add(lblNewLabel_1);
+		label_5 = new JLabel("   год");
+		label_5.setBounds(312, 130, 46, 14);
+		contentPane.add(label_5);
 
 		label_2 = new JLabel("     :");
 		label_2.setBounds(339, 119, 46, 14);
@@ -117,8 +129,15 @@ public class AddSeanceView {
 		label_3.setBounds(416, 130, 46, 14);
 		contentPane.add(label_3);
 		frame.setVisible(true);
+		
+		btnSubmit = new JButton("Submit");
+		btnSubmit.setBounds(122, 169, 200, 50);
+		contentPane.add(btnSubmit);
 	}
 
+	/**
+	 * getters and setters:
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
@@ -200,19 +219,19 @@ public class AddSeanceView {
 	}
 
 	public JLabel getLblNewLabel() {
-		return lblNewLabel;
+		return label_4;
 	}
 
 	public void setLblNewLabel(JLabel lblNewLabel) {
-		this.lblNewLabel = lblNewLabel;
+		this.label_4 = lblNewLabel;
 	}
 
 	public JLabel getLblNewLabel_1() {
-		return lblNewLabel_1;
+		return label_5;
 	}
 
 	public void setLblNewLabel_1(JLabel lblNewLabel_1) {
-		this.lblNewLabel_1 = lblNewLabel_1;
+		this.label_5 = lblNewLabel_1;
 	}
 
 	public JLabel getLabel_2() {
@@ -230,5 +249,13 @@ public class AddSeanceView {
 	public void setLabel_3(JLabel label_3) {
 		this.label_3 = label_3;
 	}
-	
+
+	public JButton getBtnSubmit() {
+		return btnSubmit;
+	}
+
+	public void setBtnSubmit(JButton btnSubmit) {
+		this.btnSubmit = btnSubmit;
+	}
+
 }

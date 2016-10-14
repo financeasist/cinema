@@ -6,16 +6,15 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import ua.com.cinema.view.AddMovieView;
 
 /**
- * This class creates a start window for add new movie and checks how many
- * seances user wants to create for every day. and creates appropriate
- * 'addNewFilmController' for this count.
+ * This class use AddMovieView for start window (view) for add new movie, and
+ * checks how many seances user wants to create for every day. and creates
+ * appropriate 'TransformMovie2SeanceController' for this count.
  * 
- * version 1.2 10 Oct 2016
+ * @version 1.2 10 Oct 2016
  * @author RomanGupskyi
  *
  */
@@ -26,9 +25,9 @@ public class AddMovieController {
 	static Integer durationCinH;
 	static Integer durationCinM;
 	private JFrame frame;
-	private JPanel contentPane;
 	static Integer keyCheck;
 	private AddMovieView view;
+	private JButton btnSubmit;
 
 	/**
 	 * Creates the frame.
@@ -41,13 +40,12 @@ public class AddMovieController {
 
 	/**
 	 * checks how many seances user wants to create for every day, and creates
-	 * appropriate addMovieController for this count.
+	 * appropriate TransformMovie2SeanceController for this count.
 	 */
 
 	private void initController() {
-		this.contentPane = view.getContentPane();
-		JButton btnSubmit = new JButton("Submit");
-		
+
+		btnSubmit = view.getBtnSubmit();
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -88,11 +86,12 @@ public class AddMovieController {
 				}
 			}
 		});
-		btnSubmit.setBounds(107, 129, 184, 41);
-		contentPane.add(btnSubmit);
 
 	}
 
+	/**
+	 * getters and setters:
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}

@@ -1,7 +1,9 @@
 package ua.com.cinema.models;
 
 /**
- *
+ * this class represents the model of Time.
+ * 
+ * @version 1.2 14 Oct 2016
  * @author RomanGrupskyi;
  */
 public class Time implements Comparable<Time> {
@@ -9,6 +11,12 @@ public class Time implements Comparable<Time> {
 	private int hour;
 	private int min;
 
+	/**
+	 * Creates Time;
+	 * 
+	 * @param hour
+	 * @param min
+	 */
 	public Time(int hour, int min) {
 		int tempHour = 0;
 
@@ -21,6 +29,9 @@ public class Time implements Comparable<Time> {
 
 	}
 
+	/**
+	 * Getters and setters:
+	 */
 	public int getHour() {
 		return hour;
 	}
@@ -37,6 +48,11 @@ public class Time implements Comparable<Time> {
 		this.min = newValue;
 	}
 
+	/**
+	 * Compares 2 Times
+	 * 
+	 * @return int (1,0 or -1);
+	 */
 	@Override
 	public int compareTo(Time o) {
 		int h = Integer.compare(hour, o.getHour());
@@ -49,6 +65,9 @@ public class Time implements Comparable<Time> {
 			return 0;
 	}
 
+	/**
+	 * checks Times on equales
+	 */
 	@Override
 	public boolean equals(Object o) {
 
@@ -68,6 +87,9 @@ public class Time implements Comparable<Time> {
 
 	}
 
+	/**
+	 * generates hash code;
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -79,6 +101,11 @@ public class Time implements Comparable<Time> {
 		return result;
 	}
 
+	/**
+	 * Shows Time
+	 * 
+	 * @return String
+	 */
 	@Override
 	public String toString() {
 

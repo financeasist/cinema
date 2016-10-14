@@ -20,9 +20,11 @@ import ua.com.cinema.view.CinemaGuiMainView;
 import ua.com.cinema.view.ShowScheduleView;
 
 /**
- * This is the main class for GUI application;
+ * This is the main class for GUI application; The main JFraime calls from
+ * 'CinemaGuiMainView'. This class creates bunnons with appropriate
+ * classes, which calls appropriate methods.
  * 
- * version 1.2 12 Oct 2016
+ * @version 1.2 12 Oct 2016
  * @author RomanGrupskiy
  */
 
@@ -59,7 +61,8 @@ public class CinemaGuiMain {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * adds a view components to frame.
+	 * Here user selects what he wants to do.
 	 */
 	private void initialize() {
 
@@ -83,7 +86,7 @@ public class CinemaGuiMain {
 		btnAddNewSeance.setBounds(35, 100, 200, 50);
 		frame.getContentPane().add(btnAddNewSeance);
 
-		JButton btnRemoveFilmFromList = new JButton("Видалити фільм зі списку");
+		JButton btnRemoveFilmFromList = new JButton("Видалити фільм ");
 		btnRemoveFilmFromList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {

@@ -1,16 +1,15 @@
 package ua.com.cinema.models;
 
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.HashMap;
 
 import ua.com.cinema.enums.Days;
 
 /**
  * This class represents a cinema working process. Cinema works every day from
- * time opening to time closing (fields timeOpen / timeClose) and has some
- * schedule seances for every day (field weeklySchedule).
+ * timeOpen to timeClose (fields timeOpen / timeClose) and has some schedule
+ * seances for every day (field weeklySchedule).
  *
  * @version 1.3 08 October 2016
  * @author RomanGrupskyi;
@@ -20,12 +19,12 @@ public class Cinema {
 
 	private Time timeOpen;
 	private Time timeClose;
-	private HashMap<Days, Schedule> weeklySchedule;
+	private Map<Days, Schedule> weeklySchedule;
 
 	public Cinema(Time open, Time close) {
 		this.timeOpen = open;
 		this.timeClose = close;
-		this.weeklySchedule = new HashMap<Days, Schedule>();
+		this.weeklySchedule = new LinkedHashMap<Days, Schedule>();
 
 		weeklySchedule.put(Days.MONDAY, new Schedule());
 		weeklySchedule.put(Days.THUESDAY, new Schedule());
@@ -36,6 +35,9 @@ public class Cinema {
 		weeklySchedule.put(Days.SUNDAY, new Schedule());
 	}
 
+	/**
+	 * Getters and setters:
+	 */
 	public Time getTimeOpen() {
 		return timeOpen;
 	}
@@ -52,11 +54,11 @@ public class Cinema {
 		this.timeClose = timeClose;
 	}
 
-	public HashMap<Days, Schedule> getWeeklySchedule() {
+	public Map<Days, Schedule> getWeeklySchedule() {
 		return weeklySchedule;
 	}
 
-	public void setWeeklySchedule(HashMap<Days, Schedule> weeklySchedule) {
+	public void setWeeklySchedule(Map<Days, Schedule> weeklySchedule) {
 		this.weeklySchedule = weeklySchedule;
 	}
 

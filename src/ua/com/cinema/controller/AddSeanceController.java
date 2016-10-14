@@ -3,7 +3,7 @@ package ua.com.cinema.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
+import javax.swing.AbstractButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -14,38 +14,46 @@ import ua.com.cinema.models.Time;
 import ua.com.cinema.service.CinemaService;
 import ua.com.cinema.view.AddSeanceView;
 
+/**
+ * This class uses a start window (view), and takes values from 
+ * 'AddSeanceView.java'. and adds a new seance for movie, in day which user had
+ * selected in this view.
+ * 
+ * @version 1.2 10 Oct 2016
+ * @author RomanGupskyi
+ */
 public class AddSeanceController {
 
 	static JFrame frame;
 	static AddSeanceView view;
 	
+	private String day;
 	private String titleCin;
 	private Integer durationCinH;
 	private Integer durationCinM;
-	private String day;
 	private Integer seanceH;
 	private Integer seanceM;
-
+	private AbstractButton btnSubmit;
 
 	/**
-	 * Create the frame.
+	 * Creates the view for user using 'AddSeanceView' class;  .
 	 */
 	public AddSeanceController() {
 		view = new AddSeanceView();
 		frame = view.getFrame();
 		initController();
 	}
-	
+
 	/**
-	 * init Controller
+	 * this method describe what will happend when user enter a buttton
+	 * 'submit'. exactly he adds a new seance to schedule;
 	 */
-	public void initController(){
+	public void initController() {
 
-		
-
-		JButton btnSubmit = new JButton("Submit");
+		btnSubmit = view.getBtnSubmit();
 		btnSubmit.addActionListener(new ActionListener() {
 			CinemaService cinemaService = new CinemaService(CinemaGuiMain.palace);
+
 			public void actionPerformed(ActionEvent e) {
 				try {
 
@@ -58,9 +66,8 @@ public class AddSeanceController {
 
 					Time durationTime = new Time(durationCinH, durationCinM);
 					Time seancestartTime = new Time(seanceH, seanceM);
-					
-					cinemaService.addSeance(day,
-							new Seance(new Movie(titleCin, durationTime), seancestartTime));
+
+					cinemaService.addSeance(day, new Seance(new Movie(titleCin, durationTime), seancestartTime));
 					JOptionPane.showMessageDialog(null,
 							"сеанс  фільму '" + titleCin + "' в " + day + " o " + seancestartTime.toString()
 									+ " додано до розкладу!\n"
@@ -73,11 +80,12 @@ public class AddSeanceController {
 				}
 			}
 		});
-		btnSubmit.setBounds(122, 169, 200, 50);
-		view.getContentPane().add(btnSubmit);
 
-		
 	}
+
+	/**
+	 * getters and setters:
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}

@@ -14,34 +14,42 @@ import ua.com.cinema.models.Time;
 import ua.com.cinema.service.CinemaService;
 import ua.com.cinema.view.TransformMovie2SeanceView;
 
+/**
+ * This class calls by 'addMovieController'. In the constructor he takes param
+ * 'countSeances' and adds new movie to schedule with this seances.
+ * 
+ * @version 1.2 10 Oct 2016
+ * @author RomanGupskyi
+ */ 
 public class TransformMovie2SeanceController {
 
 	public static int countSeances;
-
 	private JFrame frame;
 	private TransformMovie2SeanceView view;
-
 	private Integer startH1;
 	private Integer startM1;
 	private Integer startH2;
 	private Integer startM2;
 	private Integer startH3;
 	private Integer startM3;
-
 	private String titleCin = AddMovieController.titleFilm;
 	private Integer durationCinH = AddMovieController.durationCinH;
 	private Integer durationCinM = AddMovieController.durationCinM;
 
 	private CinemaService cinemaService = new CinemaService(CinemaGuiMain.palace);
-	private Container contentPane = view.getContentPane();
+	private Container contentPane;
 
 	/**
-	 * Create the frame.
+	 * takes param 'countSeances' and adds new movie to schedule with this
+	 * seances.
+	 * 
+	 * @param countSeancess
 	 */
 	public TransformMovie2SeanceController(int countSeancess) {
 		countSeances = countSeancess;
 		view = new TransformMovie2SeanceView();
 		frame = view.getFrame();
+		contentPane = view.getContentPane();
 
 		JButton btnSubmit = new JButton("Submit");
 		if (countSeances == 1) {
@@ -136,6 +144,9 @@ public class TransformMovie2SeanceController {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * getters and setters:
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}

@@ -5,16 +5,19 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
+/**
+ * This class - it's view for CinemaGuiMain class. Creates the main JFraime.
+ 
+ * @version 1.2 10 Oct 2016
+ * @author RomanGupskyi
+ */
 public class CinemaGuiMainView {
 	
-
 	private JFrame frame;
 	private ImageIcon img;
-
 	public CinemaGuiMainView() {
 		
-		frame = new JFrame();
+	frame = new JFrame();
 	frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 	frame.setTitle("**@author RomanGrupskyi");
 	frame.setBounds(100, 100, 758, 468);
@@ -28,7 +31,9 @@ public class CinemaGuiMainView {
 	frame.getContentPane().add(lblNewLabel);
 	
 	}
-
+/**
+ * Getters and setters:
+ */
 	public JFrame getFrame() {
 		return frame;
 	}

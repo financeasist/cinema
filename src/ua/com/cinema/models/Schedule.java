@@ -1,7 +1,8 @@
 package ua.com.cinema.models;
 
 /**
- *
+ * This class is model of Schedule. Has Set of Seances implemented in TreeSet<Seance>; 
+ * @version 1.2 14 Oct 2016
  * @author RomanGrupskyi;
  */
 
@@ -11,38 +12,57 @@ import java.util.TreeSet;
 
 public class Schedule {
 
-	public Set<Seance> schedule;
+	public Set<Seance> seances;
 
 	public Schedule() {
-		this.schedule = new TreeSet<Seance>();
+		this.seances = new TreeSet<Seance>();
 
 	}
-	
+
+	/**
+	 * adds seance to set
+	 * 
+	 * @param seance
+	 * 
+	 */
 	public void addSeans(Seance seance) {
-		schedule.add(seance);
+		seances.add(seance);
 	}
+
+	/**
+	 * removes seance from schedule
+	 * 
+	 * @param seance
+	 */
 	public void removeSeance(Seance seance) {
-		schedule.remove(seance);
-	}
-	
-	public Set<Seance> getSchedule() {
-		return schedule;
+		seances.remove(seance);
 	}
 
-	public void setSchedule(TreeSet<Seance> schedule) {
-		this.schedule = schedule;
+	/**
+	 * @returns set of seances
+	 */
+	public Set<Seance> getSeances() {
+		return seances;
 	}
-	
 
+	public void setSeances(Set<Seance> seances) {
+		this.seances = seances;
+	}
+
+	/**
+	 * Checks and shows the schedule (set<Seance>)
+	 * 
+	 * @return String
+	 */
 	@Override
 	public String toString() {
 		String out = "";
 
-		if (schedule.isEmpty()) {
+		if (seances.isEmpty()) {
 
 			return "Ви ще не добавили жодного сеансу! Будьласка, заповніть розклад сеансами!";
 		} else {
-			Iterator<Seance> iter = schedule.iterator();
+			Iterator<Seance> iter = seances.iterator();
 
 			while (iter.hasNext())
 				out += iter.next().toString();

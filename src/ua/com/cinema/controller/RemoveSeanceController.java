@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import ua.com.cinema.main.CinemaGuiMain;
 import ua.com.cinema.models.Movie;
@@ -15,22 +14,27 @@ import ua.com.cinema.models.Time;
 import ua.com.cinema.service.CinemaService;
 import ua.com.cinema.view.RemoveSeanceView;
 
+/**
+ * This class takes values from RemoveSeanceView.java and remove seance from
+ * schedule;
+ * 
+ * @version 1.2 14 Oct 2016
+ * @author RomanGrupskyi* @author User
+ *
+ */
 public class RemoveSeanceController {
 
 	private RemoveSeanceView view;
 	private JFrame frame;
-	private JPanel contentPane;
+	private JButton btnSubmit;
 
 	private String titleCin;
-	private Integer durationCinH;
-	private Integer durationCinM;
-	private static String day;
-	private Integer seanceH;
-	private Integer seanceM;
-
+	private Time durationTime;
+	private String day;
+	private Time seanceStartTime;
 
 	/**
-	 * Create the frame.
+	 * Creates the RemoveSeanceController()
 	 */
 	public RemoveSeanceController() {
 		this.view = new RemoveSeanceView();
@@ -39,29 +43,25 @@ public class RemoveSeanceController {
 	}
 
 	/**
-	 * init Controller
+	 * this method takes selected by user values from RemoveSeanceView and
+	 * removes seance;
 	 */
 	private void initController() {
-		this.contentPane = view.getContentPane();
-		JButton btnSubmit = new JButton("Submit");
+
+		btnSubmit = view.getBtnSubmit();
+
 		btnSubmit.addActionListener(new ActionListener() {
 			CinemaService cinemaService = new CinemaService(CinemaGuiMain.palace);
 
 			public void actionPerformed(ActionEvent e) {
 				try {
 					day = RemoveSeanceView.getDay();
-					titleCin = view.getTextFieldTitleFilmToRemove().getText();
-					durationCinH = Integer.parseInt(view.getTextFieldDurationFilmHH().getText());
-					durationCinM = Integer.parseInt(view.getTextFieldDurationFilmMm().getText());
-
-					seanceH = Integer.parseInt(view.getTextFieldStartTimeHH().getText());
-					seanceM = Integer.parseInt(view.getTextFieldStartTimeMm().getText());
-					Time seancestartTime = new Time(seanceH, seanceM);
-					cinemaService.removeSeance(day,
-							new Seance(new Movie(titleCin, new Time(durationCinH, durationCinM)), seancestartTime));
+					titleCin = RemoveSeanceView.getTitleFilmtoRemove();
+					durationTime = RemoveSeanceView.getDurationTime();
+					seanceStartTime = RemoveSeanceView.getSeanceStartTime();
+					cinemaService.removeSeance(day, new Seance(new Movie(titleCin, durationTime), seanceStartTime));
 					JOptionPane.showMessageDialog(null, "сеанс  фільму '" + titleCin + "' в " + day + " o "
-							+ seancestartTime.toString() + " видалено!");
-
+							+ seanceStartTime.toString() + " видалено!");
 					frame.dispose();
 
 				} catch (Exception e1) {
@@ -69,12 +69,12 @@ public class RemoveSeanceController {
 				}
 			}
 		});
-		btnSubmit.setBounds(122, 169, 200, 50);
-		contentPane.add(btnSubmit);
 
-		
 	}
 
+	/**
+	 * getters and setters:
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
