@@ -111,21 +111,22 @@ public class RemoveSeanceView {
 				}
 			}
 		});
-		comboBoxSchedule.setBounds(217, 47, 227, 25);
+		comboBoxSchedule.setBounds(248, 47, 196, 25);
 		contentPane.add(comboBoxSchedule);
-		frame.setVisible(true);
-
+		
 		JLabel lblTitlefilmSeanceToRemove = new JLabel("Виберіть  сеанс який хочете видалити :");
-		lblTitlefilmSeanceToRemove.setBounds(10, 47, 215, 25);
+		lblTitlefilmSeanceToRemove.setBounds(10, 47, 255, 25);
 		contentPane.add(lblTitlefilmSeanceToRemove);
 
-		btnSubmit = new JButton("Submit");
+		btnSubmit = new JButton("Delete");
 		btnSubmit.setBounds(132, 93, 196, 31);
 		contentPane.add(btnSubmit);
 
 		JList<Object> list = new JList<Object>();
 		list.setBounds(356, 11, 29, 17);
 		contentPane.add(list);
+		
+		frame.setVisible(true);
 
 	}
 

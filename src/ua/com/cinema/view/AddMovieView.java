@@ -59,12 +59,12 @@ public class AddMovieView {
 		labelFilmName.setBounds(10, 11, 189, 25);
 		contentPane.add(labelFilmName);
 
-		JLabel lblCountSeance = new JLabel("Введіть  кількість сеансів (max 3):");
-		lblCountSeance.setBounds(10, 83, 215, 25);
+		JLabel lblCountSeance = new JLabel("Скільки щоденних сеансів додати? (max 3):");
+		lblCountSeance.setBounds(10, 83, 313, 25);
 		contentPane.add(lblCountSeance);
 
 		textFieldCountSeance = new JTextField();
-		textFieldCountSeance.setBounds(209, 83, 40, 25);
+		textFieldCountSeance.setBounds(327, 84, 31, 23);
 		contentPane.add(textFieldCountSeance);
 		textFieldCountSeance.setColumns(10);
 
@@ -95,11 +95,11 @@ public class AddMovieView {
 		contentPane.add(lblNewLabel);
 
 		textFieldFilmName = new JTextField();
-		textFieldFilmName.setBounds(209, 13, 123, 23);
+		textFieldFilmName.setBounds(209, 13, 159, 23);
 		contentPane.add(textFieldFilmName);
 		textFieldFilmName.setColumns(10);
 
-		btnSubmit = new JButton("Submit");
+		btnSubmit = new JButton("Add movie");
 		btnSubmit.setBounds(107, 129, 184, 41);
 		contentPane.add(btnSubmit);
 		frame.setVisible(true);

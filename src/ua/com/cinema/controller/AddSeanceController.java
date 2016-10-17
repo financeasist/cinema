@@ -15,7 +15,7 @@ import ua.com.cinema.service.CinemaService;
 import ua.com.cinema.view.AddSeanceView;
 
 /**
- * This class uses a start window (view), and takes values from 
+ * This class uses a start window (view), and takes values from
  * 'AddSeanceView.java'. and adds a new seance for movie, in day which user had
  * selected in this view.
  * 
@@ -26,17 +26,16 @@ public class AddSeanceController {
 
 	static JFrame frame;
 	static AddSeanceView view;
-	
+
 	private String day;
-	private String titleCin;
-	private Integer durationCinH;
-	private Integer durationCinM;
+	private String titleMovie;
+	private Time durationTime;
 	private Integer seanceH;
 	private Integer seanceM;
 	private AbstractButton btnSubmit;
 
 	/**
-	 * Creates the view for user using 'AddSeanceView' class;  .
+	 * Creates the view for user using 'AddSeanceView' class; .
 	 */
 	public AddSeanceController() {
 		view = new AddSeanceView();
@@ -57,19 +56,16 @@ public class AddSeanceController {
 			public void actionPerformed(ActionEvent e) {
 				try {
 
-					day = view.getTextFieldDayToAddSeance().getText();
-					titleCin = view.getTextFieldTitleFilm().getText();
-					durationCinH = Integer.parseInt(view.getTextFieldDurationSeanceHH().getText());
-					durationCinM = Integer.parseInt(view.getTextFieldDurationSeanceMm().getText());
+					day = view.getDay();
+					titleMovie = view.getTitle();
+					durationTime = view.getDurationTime();
 					seanceH = Integer.parseInt(view.getTextFieldSeanceStartTimeHH().getText());
 					seanceM = Integer.parseInt(view.getTextFieldStartTimeFilmSeanceMm().getText());
-
-					Time durationTime = new Time(durationCinH, durationCinM);
 					Time seancestartTime = new Time(seanceH, seanceM);
 
-					cinemaService.addSeance(day, new Seance(new Movie(titleCin, durationTime), seancestartTime));
+					cinemaService.addSeance(day, new Seance(new Movie(titleMovie, durationTime), seancestartTime));
 					JOptionPane.showMessageDialog(null,
-							"сеанс  фільму '" + titleCin + "' в " + day + " o " + seancestartTime.toString()
+							"сеанс  фільму '" + titleMovie + "' в " + day + " o " + seancestartTime.toString()
 									+ " додано до розкладу!\n"
 									+ "щоб побачити розклад, натисніть кнопку: 'вивести розклад на екран'");
 
