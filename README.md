@@ -9,7 +9,7 @@ ___
 ___
 ##### How to run
 *When you have cloned directory on your local machine, import a project to IDE and run CinemaGuiMain.java;* 
-##### Change text file encoding to UTF-8 in project's properties!
+##### *Change text file encoding to UTF-8 in project's properties!*
 
 ___
 ##### Example:
