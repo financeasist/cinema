@@ -44,12 +44,12 @@ public class RemoveMovieController {
 
 			public void actionPerformed(ActionEvent e) {
 				try {
-					filmName = view.getTextField().getText();
+					filmName = view.getTitle();
 					boolean isRemoved = cinemaService.removeMovie(filmName);
 					if (isRemoved)
-						JOptionPane.showMessageDialog(null, "фільм '" + filmName + "' видалено з розкладу!");
+						JOptionPane.showMessageDialog(null, "фільм '" + filmName + " ' видалено з розкладу!");
 					else
-						JOptionPane.showMessageDialog(null, "фільму '" + filmName + "' в розкладі нема!");
+						JOptionPane.showMessageDialog(null, "такого фільму: ' " + filmName + "' в розкладі нема!");
 					frame.dispose();
 				} catch (Exception e1) {
 				}
@@ -58,9 +58,6 @@ public class RemoveMovieController {
 
 	}
 
-	/**
-	 * here is getters and setters:
-	 */
 	public JFrame getFrame() {
 		return frame;
 	}

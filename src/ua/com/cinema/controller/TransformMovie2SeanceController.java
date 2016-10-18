@@ -9,18 +9,20 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import ua.com.cinema.main.CinemaGuiMain;
-import ua.com.cinema.models.Movie;
-import ua.com.cinema.models.Time;
+import ua.com.cinema.model.Movie;
+import ua.com.cinema.model.Time;
 import ua.com.cinema.service.CinemaService;
+import ua.com.cinema.util.SeanceUtil;
+import ua.com.cinema.util.ViewUtil;
 import ua.com.cinema.view.TransformMovie2SeanceView;
 
 /**
  * This class calls by 'addMovieController'. In the constructor he takes param
  * 'countSeances' and adds new movie to schedule with this seances.
  * 
- * @version 1.2 10 Oct 2016
+ * @version 1.3 18 Oct 2016
  * @author RomanGupskyi
- */ 
+ */
 public class TransformMovie2SeanceController {
 
 	public static int countSeances;
@@ -50,25 +52,38 @@ public class TransformMovie2SeanceController {
 		view = new TransformMovie2SeanceView();
 		frame = view.getFrame();
 		contentPane = view.getContentPane();
-
-		JButton btnSubmit = new JButton("Submit");
+		Time durationTime = new Time(durationCinH, durationCinM);
+		JButton btnSubmit = new JButton("Додати фільм");
+		
 		if (countSeances == 1) {
 			btnSubmit.setBounds(96, 83, 156, 25);
 			btnSubmit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
-
-						startH1 = Integer.parseInt(view.getTextFieldStartTime1HH().getText());
-						startM1 = Integer.parseInt(view.getTextFieldStartTime1Mm().getText());
+						startH1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1HH());
+						startM1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1Mm());
 						Time startTime1 = new Time(startH1, startM1);
-						cinemaService.addMovie(new Movie(titleCin, new Time(durationCinH, durationCinM)), startTime1);
-						JOptionPane.showMessageDialog(null,
-								" фільм :'" + titleCin + "' із щоденними сенсами o '" + startTime1.toString()
+						Time endTime1 = SeanceUtil.calculateEndTime(startTime1, durationTime);
+						/**
+						 * checks time is correct and add movie
+						 */
+						boolean isCorrectTime1 = cinemaService.compareWithCinemaWorkingTime(startTime1, endTime1);
+						if (isCorrectTime1) {
+							boolean isAdded = cinemaService.addMovie(new Movie(titleCin, durationTime), startTime1);
+							if (isAdded) {
+								JOptionPane.showMessageDialog(null, " фільм :'" + titleCin
+										+ "' із щоденними сенсами o '" + startTime1.toString()
 										+ "' додано до розкладу!\n"
 										+ " Щоб побачити розклад, натисніть кнопку 'вивести розклад на екран'!");
 
-						frame.dispose();
+								frame.dispose();
+							} else
+								JOptionPane.showMessageDialog(null,
+										"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
 
+						} else
+							JOptionPane.showMessageDialog(null,
+									"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(null, e1);
 					}
@@ -83,21 +98,40 @@ public class TransformMovie2SeanceController {
 				public void actionPerformed(ActionEvent e) {
 					try {
 
-						startH1 = Integer.parseInt(view.getTextFieldStartTime1HH().getText());
-						startM1 = Integer.parseInt(view.getTextFieldStartTime1Mm().getText());
-						startH2 = Integer.parseInt(view.getTextFieldStartTime2HH().getText());
-						startM2 = Integer.parseInt(view.getTextFieldStartTime2Mm().getText());
-						Time startTime1 = new Time(startH1, startM1);
-						Time startTime2 = new Time(startH2, startM2);
-						cinemaService.addMovie(new Movie(titleCin, new Time(durationCinH, durationCinM)), startTime1,
-								startTime2);
+						startH1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1HH());
+						startM1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1Mm());
+						startH2 = ViewUtil.textField2Integer(view.getTextFieldStartTime2HH());
+						startM2 = ViewUtil.textField2Integer(view.getTextFieldStartTime2Mm());
 
-						JOptionPane.showMessageDialog(null,
-								" фільм :'" + titleCin + "' із щоденними сенсами o '" + startTime1.toString() + "' та "
+						Time startTime1 = new Time(startH1, startM1);
+						Time endTime1 = SeanceUtil.calculateEndTime(startTime1, durationTime);
+						Time startTime2 = new Time(startH2, startM2);
+						Time endTime2 = SeanceUtil.calculateEndTime(startTime2, durationTime);
+						boolean isCorrectTime1 = cinemaService.compareWithCinemaWorkingTime(startTime1, endTime1);
+						boolean isCorrectTime2 = cinemaService.compareWithCinemaWorkingTime(startTime2, endTime2);
+						/**
+						 * checks time is correct:
+						 */
+						if (isCorrectTime1 && isCorrectTime2) {
+							/**
+							 * trys to add movie
+							 */
+							boolean isAdded = cinemaService.addMovie(new Movie(titleCin, durationTime), startTime1,
+									startTime2);
+							if (isAdded) {
+								JOptionPane.showMessageDialog(null, " фільм :'" + titleCin
+										+ "' із щоденними сенсами o '" + startTime1.toString() + "' та "
 										+ startTime2.toString() + "' додано до розкладу!\n"
 										+ " Щоб побачити розклад, натисніть кнопку 'вивести розклад на екран'!");
 
-						frame.dispose();
+								frame.dispose();
+							} else
+								JOptionPane.showMessageDialog(null,
+										"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
+
+						} else
+							JOptionPane.showMessageDialog(null,
+									"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
 
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(null, e1);
@@ -111,26 +145,39 @@ public class TransformMovie2SeanceController {
 
 				public void actionPerformed(ActionEvent e) {
 					try {
-						startH1 = Integer.parseInt(view.getTextFieldStartTime1HH().getText());
-						startM1 = Integer.parseInt(view.getTextFieldStartTime1Mm().getText());
-						startH2 = Integer.parseInt(view.getTextFieldStartTime2HH().getText());
-						startM2 = Integer.parseInt(view.getTextFieldStartTime2Mm().getText());
-						startH3 = Integer.parseInt(view.getTextFieldStartTime3HH().getText());
-						startM3 = Integer.parseInt(view.getTextFieldStartTime3Mm().getText());
+						startH1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1HH());
+						startM1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1Mm());
+						startH2 = ViewUtil.textField2Integer(view.getTextFieldStartTime2HH());
+						startM2 = ViewUtil.textField2Integer(view.getTextFieldStartTime2Mm());
+						startH3 = ViewUtil.textField2Integer(view.getTextFieldStartTime3HH());
+						startM3 = ViewUtil.textField2Integer(view.getTextFieldStartTime3Mm());
 						Time startTime1 = new Time(startH1, startM1);
+						Time endTime1 = SeanceUtil.calculateEndTime(startTime1, durationTime);
 						Time startTime2 = new Time(startH2, startM2);
+						Time endTime2 = SeanceUtil.calculateEndTime(startTime2, durationTime);
 						Time startTime3 = new Time(startH3, startM3);
-						cinemaService.addMovie(new Movie(titleCin, new Time(durationCinH, durationCinM)), startTime1,
-								startTime2, startTime3);
-
-						JOptionPane.showMessageDialog(null,
-								" фільм :'" + titleCin + "' із щоденними сенсами o '" + startTime1.toString() + "', '"
+						Time endTime3 = SeanceUtil.calculateEndTime(startTime3, durationTime);
+						boolean isCorrectTime1 = cinemaService.compareWithCinemaWorkingTime(startTime1, endTime1);
+						boolean isCorrectTime2 = cinemaService.compareWithCinemaWorkingTime(startTime2, endTime2);
+						boolean isCorrectTime3 = cinemaService.compareWithCinemaWorkingTime(startTime3, endTime3);
+						if (isCorrectTime1 && isCorrectTime2 && isCorrectTime3) {
+							boolean isAdded = cinemaService.addMovie(new Movie(titleCin, durationTime), startTime1,
+									startTime2, startTime3);
+							if (isAdded) {
+								JOptionPane.showMessageDialog(null, " фільм :'" + titleCin
+										+ "' із щоденними сенсами o '" + startTime1.toString() + "', '"
 										+ startTime2.toString() + "' та " + startTime3.toString()
 										+ "' додано до розкладу!\n"
 										+ " Щоб побачити розклад, натисніть кнопку 'вивести розклад на екран'!");
 
-						frame.dispose();
+								frame.dispose();
+							} else
+								JOptionPane.showMessageDialog(null,
+										"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
 
+						} else
+							JOptionPane.showMessageDialog(null,
+									"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(null, e1);
 					}
@@ -144,9 +191,6 @@ public class TransformMovie2SeanceController {
 		frame.setVisible(true);
 	}
 
-	/**
-	 * getters and setters:
-	 */
 	public JFrame getFrame() {
 		return frame;
 	}

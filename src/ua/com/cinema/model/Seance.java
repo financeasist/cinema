@@ -1,4 +1,4 @@
-package ua.com.cinema.models;
+package ua.com.cinema.model;
 
 /**
  * this class represents the model for seance of movie. has timeStart and
@@ -35,9 +35,6 @@ public class Seance implements Comparable<Seance> {
 		}
 	}
 
-	/**
-	 * Getters and setters:
-	 */
 	public Time getEndTime() {
 		return endTime;
 	}

@@ -1,13 +1,30 @@
 package ua.com.cinema.view;
 
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import ua.com.cinema.enums.Days;
+import ua.com.cinema.main.CinemaGuiMain;
+import ua.com.cinema.model.Cinema;
+import ua.com.cinema.model.Movie;
+import ua.com.cinema.model.Schedule;
+import ua.com.cinema.model.Seance;
+import ua.com.cinema.model.Time;
+import ua.com.cinema.service.CinemaService;
 
 /**
  * This class creates a start window (view)to add new seance to schedule in day
@@ -18,126 +35,142 @@ import javax.swing.border.EmptyBorder;
  */
 public class AddSeanceView {
 
+	private String day = "MONDAY";
+	private String title = "--choose a movie--";
 	private JFrame frame;
 	private JPanel contentPane;
-	private JLabel label;
-	private JLabel label_1;
+
 	private JLabel label_2;
 	private JLabel label_3;
-	private JLabel label_4;
 	private JLabel label_5;
 	private JButton btnSubmit;
-	private JTextField textFieldDayToAddSeance;
-	private JTextField textFieldTitleFilm;
-	private JTextField textFieldDurationSeanceHH;
-	private JTextField textFieldDurationSeanceMm;
+
 	private JTextField textFieldSeanceStartTimeHH;
 	private JTextField textFieldStartTimeFilmSeanceMm;
+	private JComboBox<Object> comboBoxDays;
+	private CinemaService cinemaService = new CinemaService(CinemaGuiMain.palace);
+	private Seance seance = null;
+	private Time durationTime;
+
 	/**
-	 * creates a frame
+	 * Creates  window for addSeance;
 	 */
 	public AddSeanceView() {
-
+		initWindow();
+		initWindowComponents();
+	}
+	
+	/**
+	 * Creates a frame;
+	 */
+	public void initWindow() {
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 		frame.setTitle("**@author RomanGrupskyi");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setBounds(100, 100, 473, 281);
+		frame.setBounds(100, 100, 445, 199);
 		contentPane = new JPanel();
 		contentPane.setToolTipText("");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
-	
-		initViewConponents();
 	}
 
 	/**
-	 * adds a view components to frame.
-	 * here user can enter which movie and when he
-	 * wants to add.
+	 * adds a view components to frame. here user can choose which movie and
+	 * when he wants to add.
 	 */
-	private void initViewConponents() {
+	private void initWindowComponents() {
+		Days[] days = Days.values();
+		comboBoxDays = new JComboBox<Object>(days);
+		comboBoxDays.setEditable(true);
+		comboBoxDays.setBackground(Color.WHITE);
+		comboBoxDays.addItemListener(new ItemListener() {
 
-		JLabel labelDayForSeance = new JLabel("Введіть день в який хочете додати сеанс (англ!):");
-		labelDayForSeance.setBounds(10, 11, 302, 25);
+			@Override
+			public void itemStateChanged(ItemEvent event) {
+				if (event.getStateChange() == ItemEvent.SELECTED)
+					day = comboBoxDays.getSelectedItem().toString();
+			}
+		});
+		comboBoxDays.setBounds(273, 13, 125, 20);
+		contentPane.add(comboBoxDays);
+		JLabel labelDayForSeance = new JLabel("Виберіть день в який хочете додати сеанс :");
+		labelDayForSeance.setBounds(10, 11, 258, 25);
 		contentPane.add(labelDayForSeance);
 
-		textFieldDayToAddSeance = new JTextField();
-		textFieldDayToAddSeance.setBounds(322, 11, 121, 25);
-		contentPane.add(textFieldDayToAddSeance);
-		textFieldDayToAddSeance.setColumns(10);
+		Cinema cinema = cinemaService.getCinema();
+		Map<Days, Schedule> weeklySchedule = cinema.getWeeklySchedule();
+		Days valueOfDay = Days.valueOf(day);
+		Schedule seances = weeklySchedule.get(valueOfDay);
+		Set<Seance> seances2 = seances.getSeances();
+		Iterator<Seance> iter = seances2.iterator();
+		Set<String> setTitles = new LinkedHashSet<String>();
+		setTitles.add(title);
 
-		JLabel lblTitlefilmSeance = new JLabel("Введіть  назву фільму (сеансу) :");
-		lblTitlefilmSeance.setBounds(10, 47, 215, 25);
+		while (iter.hasNext()) {
+			seance = (Seance) iter.next();
+			title = seance.getMovie().getTitle();
+			setTitles.add(title);
+		}
+		Object[] titles = setTitles.toArray();
+		JComboBox<Object> comboBoxTitles = new JComboBox<Object>(titles);
+		comboBoxTitles.setBackground(Color.WHITE);
+		comboBoxTitles.setEditable(true);
+		comboBoxTitles.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent event) {
+				if (event.getStateChange() == ItemEvent.SELECTED) {
+					Object selectedTitle = comboBoxTitles.getSelectedItem();
+					title = (String) selectedTitle;
+
+					Movie movie = seance.getMovie();
+					durationTime = movie.getDurationTime();
+				}
+			}
+		});
+		comboBoxTitles.setBounds(273, 49, 125, 20);
+		contentPane.add(comboBoxTitles);
+
+		JLabel lblTitlefilmSeance = new JLabel("Оберіть фільм якому хочете додати сеанс:");
+		lblTitlefilmSeance.setBounds(10, 47, 251, 25);
 		contentPane.add(lblTitlefilmSeance);
 
-		textFieldTitleFilm = new JTextField();
-		textFieldTitleFilm.setBounds(322, 47, 121, 25);
-		contentPane.add(textFieldTitleFilm);
-		textFieldTitleFilm.setColumns(10);
-
-		JLabel lblDurationFilmtoSeanceHH = new JLabel("Введіть тривалість фільму :");
-		lblDurationFilmtoSeanceHH.setBounds(10, 83, 215, 25);
-		contentPane.add(lblDurationFilmtoSeanceHH);
-
-		textFieldDurationSeanceHH = new JTextField();
-		textFieldDurationSeanceHH.setBounds(272, 83, 40, 25);
-		contentPane.add(textFieldDurationSeanceHH);
-		textFieldDurationSeanceHH.setColumns(10);
-
-		textFieldDurationSeanceMm = new JTextField();
-		textFieldDurationSeanceMm.setBounds(375, 83, 40, 25);
-		contentPane.add(textFieldDurationSeanceMm);
-		textFieldDurationSeanceMm.setColumns(10);
-
 		JLabel lblSeanceTimeStartHH = new JLabel("Введіть час початку сеансу:");
-		lblSeanceTimeStartHH.setBounds(10, 119, 176, 25);
+		lblSeanceTimeStartHH.setBounds(10, 85, 176, 25);
 		contentPane.add(lblSeanceTimeStartHH);
 
 		textFieldSeanceStartTimeHH = new JTextField();
-		textFieldSeanceStartTimeHH.setBounds(272, 119, 40, 25);
+		textFieldSeanceStartTimeHH.setBounds(253, 90, 27, 20);
 		contentPane.add(textFieldSeanceStartTimeHH);
 		textFieldSeanceStartTimeHH.setColumns(10);
 
 		textFieldStartTimeFilmSeanceMm = new JTextField();
-		textFieldStartTimeFilmSeanceMm.setBounds(375, 119, 40, 25);
+		textFieldStartTimeFilmSeanceMm.setBounds(344, 87, 27, 20);
 		contentPane.add(textFieldStartTimeFilmSeanceMm);
 		textFieldStartTimeFilmSeanceMm.setColumns(10);
 
-		label = new JLabel("     :");
-		label.setBounds(339, 88, 46, 14);
-		contentPane.add(label);
-
-		label_1 = new JLabel("   год");
-		label_1.setBounds(312, 94, 46, 14);
-		contentPane.add(label_1);
-
-		label_4 = new JLabel("   хв");
-		label_4.setBounds(416, 94, 46, 14);
-		contentPane.add(label_4);
-
 		label_5 = new JLabel("   год");
-		label_5.setBounds(312, 130, 46, 14);
+		label_5.setBounds(283, 90, 40, 14);
 		contentPane.add(label_5);
 
 		label_2 = new JLabel("     :");
-		label_2.setBounds(339, 119, 46, 14);
+		label_2.setBounds(307, 90, 27, 14);
 		contentPane.add(label_2);
 
 		label_3 = new JLabel("   хв");
-		label_3.setBounds(416, 130, 46, 14);
+		label_3.setBounds(371, 90, 27, 14);
 		contentPane.add(label_3);
 		frame.setVisible(true);
-		
-		btnSubmit = new JButton("Submit");
-		btnSubmit.setBounds(122, 169, 200, 50);
+
+		btnSubmit = new JButton("додати сеанс");
+		btnSubmit.setBounds(146, 121, 151, 25);
 		contentPane.add(btnSubmit);
+
+		frame.setVisible(true);
 	}
 
-	/**
-	 * getters and setters:
-	 */
 	public JFrame getFrame() {
 		return frame;
 	}
@@ -152,38 +185,6 @@ public class AddSeanceView {
 
 	public void setContentPane(JPanel contentPane) {
 		this.contentPane = contentPane;
-	}
-
-	public JTextField getTextFieldDayToAddSeance() {
-		return textFieldDayToAddSeance;
-	}
-
-	public void setTextFieldDayToAddSeance(JTextField textFieldDayToAddSeance) {
-		this.textFieldDayToAddSeance = textFieldDayToAddSeance;
-	}
-
-	public JTextField getTextFieldTitleFilm() {
-		return textFieldTitleFilm;
-	}
-
-	public void setTextFieldTitleFilm(JTextField textFieldTitleFilm) {
-		this.textFieldTitleFilm = textFieldTitleFilm;
-	}
-
-	public JTextField getTextFieldDurationSeanceHH() {
-		return textFieldDurationSeanceHH;
-	}
-
-	public void setTextFieldDurationSeanceHH(JTextField textFieldDurationSeanceHH) {
-		this.textFieldDurationSeanceHH = textFieldDurationSeanceHH;
-	}
-
-	public JTextField getTextFieldDurationSeanceMm() {
-		return textFieldDurationSeanceMm;
-	}
-
-	public void setTextFieldDurationSeanceMm(JTextField textFieldDurationSeanceMm) {
-		this.textFieldDurationSeanceMm = textFieldDurationSeanceMm;
 	}
 
 	public JTextField getTextFieldSeanceStartTimeHH() {
@@ -202,60 +203,36 @@ public class AddSeanceView {
 		this.textFieldStartTimeFilmSeanceMm = textFieldStartTimeFilmSeanceMm;
 	}
 
-	public JLabel getLabel() {
-		return label;
-	}
-
-	public void setLabel(JLabel label) {
-		this.label = label;
-	}
-
-	public JLabel getLabel_1() {
-		return label_1;
-	}
-
-	public void setLabel_1(JLabel label_1) {
-		this.label_1 = label_1;
-	}
-
-	public JLabel getLblNewLabel() {
-		return label_4;
-	}
-
-	public void setLblNewLabel(JLabel lblNewLabel) {
-		this.label_4 = lblNewLabel;
-	}
-
-	public JLabel getLblNewLabel_1() {
-		return label_5;
-	}
-
-	public void setLblNewLabel_1(JLabel lblNewLabel_1) {
-		this.label_5 = lblNewLabel_1;
-	}
-
-	public JLabel getLabel_2() {
-		return label_2;
-	}
-
-	public void setLabel_2(JLabel label_2) {
-		this.label_2 = label_2;
-	}
-
-	public JLabel getLabel_3() {
-		return label_3;
-	}
-
-	public void setLabel_3(JLabel label_3) {
-		this.label_3 = label_3;
-	}
-
 	public JButton getBtnSubmit() {
 		return btnSubmit;
 	}
 
 	public void setBtnSubmit(JButton btnSubmit) {
 		this.btnSubmit = btnSubmit;
+	}
+
+	public String getDay() {
+		return day;
+	}
+
+	public void setDay(String day) {
+		this.day = day;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Time getDurationTime() {
+		return durationTime;
+	}
+
+	public void setDurationTime(Time durationTime) {
+		this.durationTime = durationTime;
 	}
 
 }

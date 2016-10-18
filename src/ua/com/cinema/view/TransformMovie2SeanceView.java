@@ -15,7 +15,7 @@ import ua.com.cinema.controller.TransformMovie2SeanceController;
  * enters data which 'TransformMovie2SeanceController' need for add movie to
  * schedule.
  * 
- * @version 1.2 10 Oct 2016
+ * @version 1.3 18 Oct 2016
  * @author RomanGupskyi
  */
 public class TransformMovie2SeanceView {
@@ -34,9 +34,15 @@ public class TransformMovie2SeanceView {
 	private JTextField textFieldStartTime3Mm;
 
 	/**
-	 * Creates the Frame
+	 * Creates the start Window
 	 */
 	public TransformMovie2SeanceView() {
+		
+		initWindow();
+		initComponents(countSeances);
+	}
+	public void initWindow(){
+		
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 		frame.setTitle("**@author RomanGrupskyi");
@@ -48,11 +54,11 @@ public class TransformMovie2SeanceView {
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		initComponents(countSeances);
+		
 	}
 
 	/**
-	 * adds a view components to frame.
+	 * adds a window components to frame.
 	 * 
 	 * @param countSeances
 	 */
@@ -139,10 +145,6 @@ public class TransformMovie2SeanceView {
 		}
 	}
 
-	/**
-	 * getters and setters:
-	 * 
-	 */
 	public JFrame getFrame() {
 		return frame;
 	}

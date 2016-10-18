@@ -8,14 +8,15 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import ua.com.cinema.main.CinemaGuiMain;
-import ua.com.cinema.models.Movie;
-import ua.com.cinema.models.Seance;
-import ua.com.cinema.models.Time;
+import ua.com.cinema.model.Movie;
+import ua.com.cinema.model.Seance;
+import ua.com.cinema.model.Time;
 import ua.com.cinema.service.CinemaService;
+import ua.com.cinema.util.SeanceUtil;
 import ua.com.cinema.view.AddSeanceView;
 
 /**
- * This class uses a start window (view), and takes values from 
+ * This class uses a start window (view), and takes values from
  * 'AddSeanceView.java'. and adds a new seance for movie, in day which user had
  * selected in this view.
  * 
@@ -26,17 +27,16 @@ public class AddSeanceController {
 
 	static JFrame frame;
 	static AddSeanceView view;
-	
+
 	private String day;
-	private String titleCin;
-	private Integer durationCinH;
-	private Integer durationCinM;
+	private String titleMovie;
+	private Time durationTime;
 	private Integer seanceH;
 	private Integer seanceM;
 	private AbstractButton btnSubmit;
 
 	/**
-	 * Creates the view for user using 'AddSeanceView' class;  .
+	 * Creates the view for user using 'AddSeanceView' class; .
 	 */
 	public AddSeanceController() {
 		view = new AddSeanceView();
@@ -46,7 +46,7 @@ public class AddSeanceController {
 
 	/**
 	 * this method describe what will happend when user enter a buttton
-	 * 'submit'. exactly he adds a new seance to schedule;
+	 * 'додати сеанс'. exactly he adds a new seance to schedule;
 	 */
 	public void initController() {
 
@@ -57,24 +57,34 @@ public class AddSeanceController {
 			public void actionPerformed(ActionEvent e) {
 				try {
 
-					day = view.getTextFieldDayToAddSeance().getText();
-					titleCin = view.getTextFieldTitleFilm().getText();
-					durationCinH = Integer.parseInt(view.getTextFieldDurationSeanceHH().getText());
-					durationCinM = Integer.parseInt(view.getTextFieldDurationSeanceMm().getText());
+					day = view.getDay();
+					titleMovie = view.getTitle();
+					durationTime = view.getDurationTime();
 					seanceH = Integer.parseInt(view.getTextFieldSeanceStartTimeHH().getText());
 					seanceM = Integer.parseInt(view.getTextFieldStartTimeFilmSeanceMm().getText());
+					Time seanceStartTime = new Time(seanceH, seanceM);
+					Time seanceEndTime = SeanceUtil.calculateEndTime(seanceStartTime, durationTime);
+					boolean isCorrectTime = cinemaService.compareWithCinemaWorkingTime(seanceStartTime, seanceEndTime);
+					/**
+					 * checks seance time 
+					 */
+					if (isCorrectTime) {
+						boolean isAdded = cinemaService.addSeance(day,
+								new Seance(new Movie(titleMovie, durationTime), seanceStartTime));
+						if (isAdded) {
+							JOptionPane.showMessageDialog(null,
+									"сеанс  фільму '" + titleMovie + "' в " + day + " o " + seanceStartTime.toString()
+											+ " додано до розкладу!\n"
+											+ "щоб побачити розклад, натисніть кнопку: 'вивести розклад на екран'");
 
-					Time durationTime = new Time(durationCinH, durationCinM);
-					Time seancestartTime = new Time(seanceH, seanceM);
+							frame.dispose();
+						} else
+							JOptionPane.showMessageDialog(null,
+									"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
 
-					cinemaService.addSeance(day, new Seance(new Movie(titleCin, durationTime), seancestartTime));
-					JOptionPane.showMessageDialog(null,
-							"сеанс  фільму '" + titleCin + "' в " + day + " o " + seancestartTime.toString()
-									+ " додано до розкладу!\n"
-									+ "щоб побачити розклад, натисніть кнопку: 'вивести розклад на екран'");
-
-					frame.dispose();
-
+					} else
+						JOptionPane.showMessageDialog(null,
+								"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1);
 				}
@@ -83,9 +93,6 @@ public class AddSeanceController {
 
 	}
 
-	/**
-	 * getters and setters:
-	 */
 	public JFrame getFrame() {
 		return frame;
 	}

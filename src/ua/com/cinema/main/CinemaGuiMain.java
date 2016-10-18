@@ -12,9 +12,9 @@ import ua.com.cinema.controller.AddMovieController;
 import ua.com.cinema.controller.AddSeanceController;
 import ua.com.cinema.controller.RemoveMovieController;
 import ua.com.cinema.controller.RemoveSeanceController;
-import ua.com.cinema.models.Cinema;
-import ua.com.cinema.models.Movie;
-import ua.com.cinema.models.Time;
+import ua.com.cinema.model.Cinema;
+import ua.com.cinema.model.Movie;
+import ua.com.cinema.model.Time;
 import ua.com.cinema.service.CinemaService;
 import ua.com.cinema.view.CinemaGuiMainView;
 import ua.com.cinema.view.ShowScheduleView;
@@ -27,7 +27,6 @@ import ua.com.cinema.view.ShowScheduleView;
  * @version 1.2 12 Oct 2016
  * @author RomanGrupskiy
  */
-
 public class CinemaGuiMain {
 
 	private JFrame frame;
@@ -131,7 +130,7 @@ public class CinemaGuiMain {
 					cinemaService.addMovie(new Movie("Heaven's kingdom", new Time(2, 12)), new Time(9, 10));
 					cinemaService.addMovie(new Movie("Lion King", new Time(1, 36)), new Time(14, 50), new Time(16, 0),
 							new Time(8, 30));
-					cinemaService.addMovie(new Movie("Hobbit 2", new Time(2, 48)), new Time(12, 45), new Time(22, 15));
+					cinemaService.addMovie(new Movie("Hobbit 2", new Time(2, 48)), new Time(12, 45), new Time(20, 15));
 					JOptionPane.showMessageDialog(null, "films succsessfully edded to schedule!" + "\n"
 							+ "натисніть 'показати розклад' щоб вивести розклад на екран!");
 
@@ -147,12 +146,13 @@ public class CinemaGuiMain {
 		JButton btnShowSchedule = new JButton("Вивести розклад на екран");
 		btnShowSchedule.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ShowScheduleView showScheduleView;
 				try {
 
-					ShowScheduleView showScheduleView = new ShowScheduleView();
+					showScheduleView = new ShowScheduleView();
 					showScheduleView.getFrame().setVisible(true);
-
 					ShowScheduleView.textArea.setText(palace.toString());
+					
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1);
 				}
