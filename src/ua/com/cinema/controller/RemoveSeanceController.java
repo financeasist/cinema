@@ -8,9 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import ua.com.cinema.main.CinemaGuiMain;
-import ua.com.cinema.models.Movie;
-import ua.com.cinema.models.Seance;
-import ua.com.cinema.models.Time;
+import ua.com.cinema.model.Movie;
+import ua.com.cinema.model.Seance;
+import ua.com.cinema.model.Time;
 import ua.com.cinema.service.CinemaService;
 import ua.com.cinema.view.RemoveSeanceView;
 
@@ -18,8 +18,8 @@ import ua.com.cinema.view.RemoveSeanceView;
  * This class takes values from RemoveSeanceView.java and remove seance from
  * schedule;
  * 
- * @version 1.2 14 Oct 2016
- * @author RomanGrupskyi* @author User
+ * @version 1.3 14 Oct 2016
+ * @author RomanGrupskyi
  *
  */
 public class RemoveSeanceController {
@@ -72,9 +72,6 @@ public class RemoveSeanceController {
 
 	}
 
-	/**
-	 * getters and setters:
-	 */
 	public JFrame getFrame() {
 		return frame;
 	}

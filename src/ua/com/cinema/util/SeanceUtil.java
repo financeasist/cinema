@@ -1,6 +1,6 @@
-package ua.com.cinema.utils;
+package ua.com.cinema.util;
 
-import ua.com.cinema.models.Time;
+import ua.com.cinema.model.Time;
 
 /**
  * This class - is utilite for Seance class from package ua.com.cinema.models;
@@ -9,7 +9,7 @@ import ua.com.cinema.models.Time;
  * @author RomanGupskyi
  */
 
-public class SeanceUtils {
+public class SeanceUtil {
 
 	/**
 	 * This method calculates the movie's end time.
@@ -25,5 +25,7 @@ public class SeanceUtils {
 
 		return new Time(endTimeHour, endTimeMin);
 	}
+	
+
 
 }

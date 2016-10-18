@@ -1,4 +1,4 @@
-package ua.com.cinema.models;
+package ua.com.cinema.model;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -35,9 +35,6 @@ public class Cinema {
 		weeklySchedule.put(Days.SUNDAY, new Schedule());
 	}
 
-	/**
-	 * Getters and setters:
-	 */
 	public Time getTimeOpen() {
 		return timeOpen;
 	}

@@ -1,11 +1,10 @@
-package ua.com.cinema.models;
+package ua.com.cinema.model;
 
 /**
  * This class is model of Schedule. Has Set of Seances implemented in TreeSet<Seance>; 
  * @version 1.2 14 Oct 2016
  * @author RomanGrupskyi;
  */
-
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;

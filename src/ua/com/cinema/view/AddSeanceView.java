@@ -19,11 +19,11 @@ import javax.swing.border.EmptyBorder;
 
 import ua.com.cinema.enums.Days;
 import ua.com.cinema.main.CinemaGuiMain;
-import ua.com.cinema.models.Cinema;
-import ua.com.cinema.models.Movie;
-import ua.com.cinema.models.Schedule;
-import ua.com.cinema.models.Seance;
-import ua.com.cinema.models.Time;
+import ua.com.cinema.model.Cinema;
+import ua.com.cinema.model.Movie;
+import ua.com.cinema.model.Schedule;
+import ua.com.cinema.model.Seance;
+import ua.com.cinema.model.Time;
 import ua.com.cinema.service.CinemaService;
 
 /**
@@ -36,7 +36,7 @@ import ua.com.cinema.service.CinemaService;
 public class AddSeanceView {
 
 	private String day = "MONDAY";
-	private String title;
+	private String title = "--choose a movie--";
 	private JFrame frame;
 	private JPanel contentPane;
 
@@ -53,10 +53,17 @@ public class AddSeanceView {
 	private Time durationTime;
 
 	/**
-	 * creates a frame
+	 * Creates  window for addSeance;
 	 */
 	public AddSeanceView() {
-
+		initWindow();
+		initWindowComponents();
+	}
+	
+	/**
+	 * Creates a frame;
+	 */
+	public void initWindow() {
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 		frame.setTitle("**@author RomanGrupskyi");
@@ -67,15 +74,13 @@ public class AddSeanceView {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		initViewConponents();
 	}
 
 	/**
 	 * adds a view components to frame. here user can choose which movie and
 	 * when he wants to add.
 	 */
-	private void initViewConponents() {
+	private void initWindowComponents() {
 		Days[] days = Days.values();
 		comboBoxDays = new JComboBox<Object>(days);
 		comboBoxDays.setEditable(true);
@@ -100,14 +105,15 @@ public class AddSeanceView {
 		Schedule seances = weeklySchedule.get(valueOfDay);
 		Set<Seance> seances2 = seances.getSeances();
 		Iterator<Seance> iter = seances2.iterator();
-		Set<String> list = new LinkedHashSet<String>();
+		Set<String> setTitles = new LinkedHashSet<String>();
+		setTitles.add(title);
 
 		while (iter.hasNext()) {
 			seance = (Seance) iter.next();
 			title = seance.getMovie().getTitle();
-			list.add(title);
+			setTitles.add(title);
 		}
-		Object[] titles = list.toArray();
+		Object[] titles = setTitles.toArray();
 		JComboBox<Object> comboBoxTitles = new JComboBox<Object>(titles);
 		comboBoxTitles.setBackground(Color.WHITE);
 		comboBoxTitles.setEditable(true);
@@ -158,16 +164,13 @@ public class AddSeanceView {
 		contentPane.add(label_3);
 		frame.setVisible(true);
 
-		btnSubmit = new JButton("Add new seance");
+		btnSubmit = new JButton("додати сеанс");
 		btnSubmit.setBounds(146, 121, 151, 25);
 		contentPane.add(btnSubmit);
 
 		frame.setVisible(true);
 	}
 
-	/**
-	 * getters and setters:
-	 */
 	public JFrame getFrame() {
 		return frame;
 	}

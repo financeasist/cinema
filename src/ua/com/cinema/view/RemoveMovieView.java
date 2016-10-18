@@ -16,9 +16,9 @@ import javax.swing.JLabel;
 
 import ua.com.cinema.enums.Days;
 import ua.com.cinema.main.CinemaGuiMain;
-import ua.com.cinema.models.Cinema;
-import ua.com.cinema.models.Schedule;
-import ua.com.cinema.models.Seance;
+import ua.com.cinema.model.Cinema;
+import ua.com.cinema.model.Schedule;
+import ua.com.cinema.model.Seance;
 import ua.com.cinema.service.CinemaService;
 
 /**
@@ -26,7 +26,7 @@ import ua.com.cinema.service.CinemaService;
  * Creates a start window for remove movie, where user can write a title of
  * movie, which he wants to remove;
  * 
- * @version 1.3 10 Oct 2016
+ * @version 1.3 18 Oct 2016
  * @author RomanGupskyi
  */
 public class RemoveMovieView {
@@ -35,12 +35,17 @@ public class RemoveMovieView {
 	private JButton buttonSubmit;
 	private CinemaService cinemaService;
 	private Seance seance=null;
-	private String title;
+	private String title="--choose a movie--";
 
 	/**
-	 * creates the JFrame
+	 * Creates the start window with components for RemoveMovie
 	 */
 	public RemoveMovieView() {
+		initWindow();
+		initWindowComponents();	
+	}
+	
+	public void initWindow(){
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 		frame.setTitle("**@author RomanGrupskyi");
@@ -48,14 +53,12 @@ public class RemoveMovieView {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		initViewConponents();
-	}
+		}
 
 	/**
-	 * adds a view components to frame
+	 * Adds a view components to frame
 	 */
-
-	private void initViewConponents() {
+	private void initWindowComponents() {
 
 		JLabel lblFilmName = new JLabel("виберіть фільм який хочете видалити :");
 		lblFilmName.setFont(new Font("Times New Roman", Font.PLAIN, 13));
@@ -66,6 +69,7 @@ public class RemoveMovieView {
 		Cinema cinema = cinemaService.getCinema();
 		Map<Days, Schedule> weeklySchedule = cinema.getWeeklySchedule();
 		Set<String> titleset = new LinkedHashSet<String>();
+		titleset.add(title);
 		String movieTitle;
 		for (Days day : Days.values()) {
 			Schedule seances = weeklySchedule.get(day);
@@ -100,10 +104,6 @@ public class RemoveMovieView {
 			frame.setVisible(true);
 		}
 	
-
-	/**
-	 * getters and setters:
-	 */
 	public JFrame getFrame() {
 		return frame;
 	}

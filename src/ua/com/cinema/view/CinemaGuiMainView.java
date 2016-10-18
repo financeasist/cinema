@@ -15,6 +15,7 @@ public class CinemaGuiMainView {
 	
 	private JFrame frame;
 	private ImageIcon img;
+	
 	public CinemaGuiMainView() {
 		
 	frame = new JFrame();
@@ -31,9 +32,7 @@ public class CinemaGuiMainView {
 	frame.getContentPane().add(lblNewLabel);
 	
 	}
-/**
- * Getters and setters:
- */
+
 	public JFrame getFrame() {
 		return frame;
 	}

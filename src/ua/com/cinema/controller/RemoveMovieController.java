@@ -58,9 +58,6 @@ public class RemoveMovieController {
 
 	}
 
-	/**
-	 * here is getters and setters:
-	 */
 	public JFrame getFrame() {
 		return frame;
 	}

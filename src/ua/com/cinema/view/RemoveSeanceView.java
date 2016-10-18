@@ -16,11 +16,11 @@ import javax.swing.border.EmptyBorder;
 
 import ua.com.cinema.enums.Days;
 import ua.com.cinema.main.CinemaGuiMain;
-import ua.com.cinema.models.Cinema;
-import ua.com.cinema.models.Movie;
-import ua.com.cinema.models.Schedule;
-import ua.com.cinema.models.Seance;
-import ua.com.cinema.models.Time;
+import ua.com.cinema.model.Cinema;
+import ua.com.cinema.model.Movie;
+import ua.com.cinema.model.Schedule;
+import ua.com.cinema.model.Seance;
+import ua.com.cinema.model.Time;
 import ua.com.cinema.service.CinemaService;
 
 /**
@@ -28,7 +28,7 @@ import ua.com.cinema.service.CinemaService;
  * window with components (view) for remove seance from schedule. Here user can
  * select day and which exactly seance he want to remove;
  * 
- * @version 1.2 14 Oct 2016
+ * @version 1.3 18 Oct 2016
  * @author RomanGrupskyi
  *
  */
@@ -46,10 +46,14 @@ public class RemoveSeanceView {
 	private JComboBox<Object> comboBoxDays;
 
 	/**
-	 * creates a JFrame
+	 * creates a Window for RemoveSeanceView;
 	 */
 	public RemoveSeanceView() {
-
+		initWindow();
+		initWindowComponents();
+	}
+	
+	public void initWindow(){
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 		frame.setTitle("**@author RomanGrupskyi");
@@ -61,14 +65,13 @@ public class RemoveSeanceView {
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		initViewConponents();
 	}
 
 	/**
 	 * adds a view components to frame.
 	 * here user selects day and which exactly seance he want to remove;
 	 */
-	private void initViewConponents() {
+	private void initWindowComponents() {
 
 		Days[] days = Days.values();
 		comboBoxDays = new JComboBox<Object>(days);
@@ -130,9 +133,6 @@ public class RemoveSeanceView {
 
 	}
 
-	/**
-	 * getters and setters:
-	 */
 	public JFrame getFrame() {
 		return frame;
 	}

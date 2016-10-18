@@ -46,10 +46,7 @@ public class ShowScheduleView {
 		frame.getContentPane().add(label_1);
 	}
 
-	/**
-	 * getters and setters:
-	 */
-	public JFrame getFrame() {
+		public JFrame getFrame() {
 		return frame;
 	}
 

@@ -5,20 +5,19 @@ import java.util.Map;
 import java.util.Set;
 
 import ua.com.cinema.enums.Days;
-import ua.com.cinema.models.Cinema;
-import ua.com.cinema.models.Movie;
-import ua.com.cinema.models.Schedule;
-import ua.com.cinema.models.Seance;
-import ua.com.cinema.models.Time;
-import ua.com.cinema.utils.SeanceUtils;
+import ua.com.cinema.model.Cinema;
+import ua.com.cinema.model.Movie;
+import ua.com.cinema.model.Schedule;
+import ua.com.cinema.model.Seance;
+import ua.com.cinema.model.Time;
+import ua.com.cinema.util.SeanceUtil;
 
 /**
  * This class is service for class Cinema from package ua.com.cinema.models;
- * version 1.1 08 October 2016
+ * version 1.3 18 October 2016
  * 
  * @author RomanGrupskyi;
  */
-
 public class CinemaService {
 
 	private static Cinema cinema;
@@ -29,28 +28,32 @@ public class CinemaService {
 	}
 
 	/**
-	 * method addMovie - adds movie to schedule. Creates a new seance for each
+	 * Method addMovie - adds movie to schedule. Creates a new seance for each
 	 * time from []times.
 	 * 
 	 * @param movie
-	 * @param times
+	 * @param times[]
 	 */
-	public void addMovie(Movie movie, Time... times) {
-
+	public boolean addMovie(Movie movie, Time... times) {
+		boolean isAdded = false;
 		for (Days day : Days.values()) {
 
 			for (Time startTime : times) {
 
-				Time endTime = SeanceUtils.calculateEndTime(startTime, movie.getDurationTime());
+				Time endTime = SeanceUtil.calculateEndTime(startTime, movie.getDurationTime());
 
 				if (checkTime(startTime, endTime)) {
 
 					Map<Days, Schedule> weeklyShedule = cinema.getWeeklySchedule();
 					Schedule schedule = weeklyShedule.get(day);
 					schedule.addSeans(new Seance(movie, startTime));
-				}
+					isAdded = true;
+
+				} else
+					isAdded = false;
 			}
 		}
+		return isAdded;
 	}
 
 	/**
@@ -60,17 +63,19 @@ public class CinemaService {
 	 * @param nameOFDay
 	 * @param seance
 	 */
-	public void addSeance(String nameOFDay, Seance seance) {
-
+	public boolean addSeance(String nameOFDay, Seance seance) {
+		boolean isAdded = false;
 		for (Days day : Days.values()) {
 
 			if (nameOFDay.equalsIgnoreCase((day).toString())) {
 
 				if (checkTime(seance.getStartTime(), seance.getEndTime())) {
 					cinema.getWeeklySchedule().get(day).addSeans(seance);
+					isAdded = true;
 				}
 			}
 		}
+		return isAdded;
 	}
 
 	/**
@@ -82,7 +87,7 @@ public class CinemaService {
 	 * @return boolean for check this time with cinema timeOpen and cinema
 	 *         timeClose
 	 */
-	boolean checkTime(Time startMovieTime, Time endMovieTime) {
+	public boolean checkTime(Time startMovieTime, Time endMovieTime) {
 		boolean isCorrectStartTime = startMovieTime.compareTo(cinema.getTimeOpen()) == 1;
 		boolean isCorrectEndTime = endMovieTime.compareTo(cinema.getTimeClose()) == -1;
 
@@ -90,12 +95,28 @@ public class CinemaService {
 	}
 
 	/**
+	 * method compare sianceStartTime and sianceEndTime with cinema don't
+	 * working time
+	 * 
+	 * @param sianceStartTime
+	 * @param sianceEndTime
+	 * @return true if seance will be in time when cinema is working.
+	 */
+	public boolean compareWithCinemaWorkingTime(Time sianceStartTime, Time sianceEndTime) {
+		Time cinemaTimeClosedFrom = new Time(01, 00);
+		Time cinemaTimeClosedTo = new Time(8, 29);
+		boolean isCorrectStartTime = sianceStartTime.compareTo(cinemaTimeClosedTo) == 1;
+		boolean isCorrectEndTime = (sianceEndTime.compareTo(cinemaTimeClosedFrom) == 1)
+				&& (sianceEndTime.compareTo(cinemaTimeClosedTo) == 1);
+		return (isCorrectStartTime && isCorrectEndTime) ? true : false;
+
+	}
+
+	/**
 	 * method removeMovie - removes movie from schedule by name, accepted in
 	 * parameter;
 	 * 
-	 * @param start
-	 * @param end
-	 * @return
+	 * @param movieName
 	 */
 	public boolean removeMovie(String movieName) {
 		boolean isRemoved = false;
@@ -125,12 +146,11 @@ public class CinemaService {
 	 * @param seance
 	 */
 	public void removeSeance(String nameOfDay, Seance seance) {
-		Days[] day = Days.values();
 
-		for (int i = 0; i < day.length; i++) {
+		for (Days day : Days.values()) {
 
-			if (nameOfDay.equalsIgnoreCase(day[i].toString())) {
-				Iterator<Seance> iter = cinema.getWeeklySchedule().get(day[i]).getSeances().iterator();
+			if (nameOfDay.equalsIgnoreCase(day.toString())) {
+				Iterator<Seance> iter = cinema.getWeeklySchedule().get(day).getSeances().iterator();
 				while (iter.hasNext()) {
 
 					if (iter.next().equals(seance)) {
@@ -141,9 +161,6 @@ public class CinemaService {
 		}
 	}
 
-	/**
-	 * Getters and setters:
-	 */
 	public Cinema getCinema() {
 		return cinema;
 	}

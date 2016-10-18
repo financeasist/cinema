@@ -1,4 +1,4 @@
-package ua.com.cinema.models;
+package ua.com.cinema.model;
 
 /**
  * this class represents the model of Time.
@@ -29,9 +29,6 @@ public class Time implements Comparable<Time> {
 
 	}
 
-	/**
-	 * Getters and setters:
-	 */
 	public int getHour() {
 		return hour;
 	}
@@ -102,7 +99,7 @@ public class Time implements Comparable<Time> {
 	}
 
 	/**
-	 * Shows Time
+	 * Shows Time in a correct format
 	 * 
 	 * @return String
 	 */

@@ -13,7 +13,7 @@ import javax.swing.border.EmptyBorder;
  * This class creates a start window (view) for add new movie and checks how
  * many seances user wants to create for every day. 
  * 
- * @version 1.2 10 Oct 2016
+ * @version 1.3 18 Oct 2016
  * @author RomanGupskyi
  */
 
@@ -33,9 +33,13 @@ public class AddMovieView {
 	private JTextField textFieldFilmName;
 
 	/**
-	 * creates a frame
+	 * Creates a start window for addMovie
 	 */
 	public AddMovieView() {
+		initWindow();
+		initWindowComponents();
+	}
+		public void initWindow(){
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 		frame.setTitle("**@author RomanGrupskyi");
@@ -46,15 +50,12 @@ public class AddMovieView {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		initViewConponents();
 	}
 
 	/**
-	 * adds a view components to frame.
+	 * Adds a window's components to frame.
 	 */
-
-	private void initViewConponents() {
+	private void initWindowComponents() {
 		JLabel labelFilmName = new JLabel("Введіть назву фільму :");
 		labelFilmName.setBounds(10, 11, 189, 25);
 		contentPane.add(labelFilmName);
@@ -99,15 +100,12 @@ public class AddMovieView {
 		contentPane.add(textFieldFilmName);
 		textFieldFilmName.setColumns(10);
 
-		btnSubmit = new JButton("Add movie");
+		btnSubmit = new JButton("Додати фільм");
 		btnSubmit.setBounds(107, 129, 184, 41);
 		contentPane.add(btnSubmit);
 		frame.setVisible(true);
 	}
 
-	/**
-	 * Getters and setters:
-	 */
 	public JFrame getFrame() {
 		return frame;
 	}

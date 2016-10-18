@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import ua.com.cinema.util.ViewUtil;
 import ua.com.cinema.view.AddMovieView;
 
 /**
@@ -42,37 +43,32 @@ public class AddMovieController {
 	 * checks how many seances user wants to create for every day, and creates
 	 * appropriate TransformMovie2SeanceController for this count.
 	 */
-
 	private void initController() {
 
 		btnSubmit = view.getBtnSubmit();
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-
 					titleFilm = view.getTextFieldFilmName().getText();
-					durationCinH = Integer.parseInt(view.getTextFieldDurationFilmHH().getText());
-					durationCinM = Integer.parseInt(view.getTextFieldDurationFilmMm().getText());
+					durationCinH = ViewUtil.textField2Integer(view.getTextFieldDurationFilmHH());
+					durationCinM = ViewUtil.textField2Integer(view.getTextFieldDurationFilmMm());
 					keyCheck = Integer.parseInt(view.getTextFieldCountSeance().getText());
-
+					TransformMovie2SeanceController addNewFilmController;
 					switch (keyCheck) {
 					case 1:
-						TransformMovie2SeanceController addNewFilmController = new TransformMovie2SeanceController(
-								keyCheck);
+						addNewFilmController = new TransformMovie2SeanceController(keyCheck);
 						addNewFilmController.getFrame().setVisible(true);
 
 						break;
 
 					case 2:
-						TransformMovie2SeanceController addNewFilmController2 = new TransformMovie2SeanceController(
-								keyCheck);
-						addNewFilmController2.getFrame().setVisible(true);
+						addNewFilmController = new TransformMovie2SeanceController(keyCheck);
+						addNewFilmController.getFrame().setVisible(true);
 
 						break;
 					case 3:
-						TransformMovie2SeanceController addNewFilmController3 = new TransformMovie2SeanceController(
-								keyCheck);
-						addNewFilmController3.getFrame().setVisible(true);
+						addNewFilmController = new TransformMovie2SeanceController(keyCheck);
+						addNewFilmController.getFrame().setVisible(true);
 
 						break;
 
@@ -80,18 +76,16 @@ public class AddMovieController {
 						JOptionPane.showMessageDialog(null, "Введіть 1, 2 або 3!");
 						break;
 					}
+
 					frame.dispose();
+
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1);
 				}
 			}
 		});
-
 	}
 
-	/**
-	 * getters and setters:
-	 */
 	public JFrame getFrame() {
 		return frame;
 	}

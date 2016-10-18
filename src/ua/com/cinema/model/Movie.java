@@ -1,4 +1,4 @@
-package ua.com.cinema.models;
+package ua.com.cinema.model;
 
 /**
  * This class - it's model for movie. Has 2 fields movieTitle and durationTime;
@@ -17,9 +17,6 @@ public class Movie {
 		this.durationTime = duration;
 	}
 
-	/**
-	 * getters and setters:
-	 */
 	public Time getDurationTime() {
 		return durationTime;
 	}

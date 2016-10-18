@@ -8,10 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import ua.com.cinema.main.CinemaGuiMain;
-import ua.com.cinema.models.Movie;
-import ua.com.cinema.models.Seance;
-import ua.com.cinema.models.Time;
+import ua.com.cinema.model.Movie;
+import ua.com.cinema.model.Seance;
+import ua.com.cinema.model.Time;
 import ua.com.cinema.service.CinemaService;
+import ua.com.cinema.util.SeanceUtil;
 import ua.com.cinema.view.AddSeanceView;
 
 /**
@@ -45,7 +46,7 @@ public class AddSeanceController {
 
 	/**
 	 * this method describe what will happend when user enter a buttton
-	 * 'submit'. exactly he adds a new seance to schedule;
+	 * 'додати сеанс'. exactly he adds a new seance to schedule;
 	 */
 	public void initController() {
 
@@ -61,16 +62,29 @@ public class AddSeanceController {
 					durationTime = view.getDurationTime();
 					seanceH = Integer.parseInt(view.getTextFieldSeanceStartTimeHH().getText());
 					seanceM = Integer.parseInt(view.getTextFieldStartTimeFilmSeanceMm().getText());
-					Time seancestartTime = new Time(seanceH, seanceM);
+					Time seanceStartTime = new Time(seanceH, seanceM);
+					Time seanceEndTime = SeanceUtil.calculateEndTime(seanceStartTime, durationTime);
+					boolean isCorrectTime = cinemaService.compareWithCinemaWorkingTime(seanceStartTime, seanceEndTime);
+					/**
+					 * checks seance time 
+					 */
+					if (isCorrectTime) {
+						boolean isAdded = cinemaService.addSeance(day,
+								new Seance(new Movie(titleMovie, durationTime), seanceStartTime));
+						if (isAdded) {
+							JOptionPane.showMessageDialog(null,
+									"сеанс  фільму '" + titleMovie + "' в " + day + " o " + seanceStartTime.toString()
+											+ " додано до розкладу!\n"
+											+ "щоб побачити розклад, натисніть кнопку: 'вивести розклад на екран'");
 
-					cinemaService.addSeance(day, new Seance(new Movie(titleMovie, durationTime), seancestartTime));
-					JOptionPane.showMessageDialog(null,
-							"сеанс  фільму '" + titleMovie + "' в " + day + " o " + seancestartTime.toString()
-									+ " додано до розкладу!\n"
-									+ "щоб побачити розклад, натисніть кнопку: 'вивести розклад на екран'");
+							frame.dispose();
+						} else
+							JOptionPane.showMessageDialog(null,
+									"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
 
-					frame.dispose();
-
+					} else
+						JOptionPane.showMessageDialog(null,
+								"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1);
 				}
@@ -79,9 +93,6 @@ public class AddSeanceController {
 
 	}
 
-	/**
-	 * getters and setters:
-	 */
 	public JFrame getFrame() {
 		return frame;
 	}
