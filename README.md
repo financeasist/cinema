@@ -8,7 +8,8 @@ ___
 ##### used jdk 1.8, Spring Tool Suite 3.8.1 IDE, AWT and Swing for gui. OS: Windows 8
 ___
 ##### How to run
-*When you have cloned directory on your local machine, import a project to IDE and run CinemaGuiMain.java*  
+*When you have cloned directory on your local machine, import a project to IDE and run CinemaGuiMain.java*
+*Change text file encoding to UTF-8 in project's properties*
 
 ___
 ##### Example:
