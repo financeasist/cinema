@@ -7,7 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import ua.com.cinema.main.CinemaGuiMain;
@@ -58,7 +57,7 @@ public class RemoveSeanceController {
 
 			public void actionPerformed(ActionEvent e) {
 				try {
-					logger.info(" Button 'delete seance' was perfomed!");
+					logger.debug(" Button 'delete seance' was perfomed!");
 					day = RemoveSeanceView.getDay();
 					titleCin = RemoveSeanceView.getTitleFilmtoRemove();
 					durationTime = RemoveSeanceView.getDurationTime();
@@ -70,13 +69,16 @@ public class RemoveSeanceController {
 					logger.info("seance movie 'titleCin' at " + seanceStartTime + " in " + day
 							+ " was succsessfully removed!");
 
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, e1);
-					logger.log(Level.INFO, e1.getMessage());
+				} catch (NullPointerException e1) {
+					JOptionPane.showMessageDialog(null, "Будь-ласка, виберіть сеанс!");
+					logger.error(e1);
+					logger.warn("user didn't choose seance!");
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, e2);
+					logger.error(e2);
 				}
 			}
 		});
-
 	}
 
 	public JFrame getFrame() {

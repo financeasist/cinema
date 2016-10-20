@@ -62,7 +62,7 @@ public class RemoveMovieView {
 	 * Adds a view components to frame
 	 */
 	private void initWindowComponents() {
-		logger.info("initWindowComponents() for RemoveMovieView was started!");
+		logger.debug("initWindowComponents() for RemoveMovieView was started!");
 		JLabel lblFilmName = new JLabel("виберіть фільм який хочете видалити :");
 		lblFilmName.setFont(new Font("Times New Roman", Font.PLAIN, 13));
 		lblFilmName.setBounds(10, 23, 261, 20);
@@ -86,11 +86,11 @@ public class RemoveMovieView {
 			}
 		}
 			Object[] titles = titleset.toArray();
-			JComboBox<Object> comboBoxTitles = new JComboBox<Object>(titles);
+			final JComboBox<Object> comboBoxTitles = new JComboBox<Object>(titles);
 			comboBoxTitles.setBackground(Color.WHITE);
 			comboBoxTitles.setEditable(true);
 			/**
-			 * Here user select movie
+			 * Here user selects movie
 			 */
 			comboBoxTitles.addItemListener(new ItemListener() {
 

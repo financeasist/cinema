@@ -40,7 +40,7 @@ public class AddMovieView {
 	public AddMovieView() {
 		initWindow();
 		initWindowComponents();
-		logger.info("Init start window for AddMovieView was started");
+		logger.debug("Init start window for AddMovieView was started");
 	}
 		public void initWindow(){
 		frame = new JFrame();

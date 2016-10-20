@@ -19,7 +19,7 @@ public class CinemaGuiMainView {
 	private ImageIcon img;
 	
 	public CinemaGuiMainView() {
-	logger.info("Start's window for CinemaGuiMain was started !");	
+	logger.debug("Start's window for CinemaGuiMain was started !");	
 	frame = new JFrame();
 	frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 	frame.setTitle("**@author RomanGrupskyi");

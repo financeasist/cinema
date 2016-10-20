@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import ua.com.cinema.controller.AddMovieController;
@@ -70,12 +69,12 @@ public class CinemaGuiMain {
 	 * adds a view components to frame. Here user selects what he wants to do.
 	 */
 	private void initComponentsForWindow() {
-		logger.info(" init components for CinemaGuiMain start's window was started!");
+		logger.debug(" init components for CinemaGuiMain start's window was started!");
 		JButton btnAddnewFilm = new JButton("Додати фільм з сеансами");
 
 		btnAddnewFilm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				logger.info("\n ---button 'Додати фільм з сеансами' was perfomed!--- ");
+				logger.debug("\n ---button 'Додати фільм з сеансами' was perfomed!--- ");
 				AddMovieController cinemaAddNewFilm = new AddMovieController();
 				cinemaAddNewFilm.getFrame().setVisible(true);
 			}
@@ -86,7 +85,7 @@ public class CinemaGuiMain {
 		JButton btnAddNewSeance = new JButton("Додати сеанс");
 		btnAddNewSeance.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				logger.info("\n ---button 'Додати сеанс' was perfomed!--- ");
+				logger.debug("\n ---button 'Додати сеанс' was perfomed!--- ");
 				AddSeanceController addSeanceController = new AddSeanceController();
 				addSeanceController.getFrame().setVisible(true);
 			}
@@ -97,14 +96,14 @@ public class CinemaGuiMain {
 		JButton btnRemoveFilmFromList = new JButton("Видалити фільм ");
 		btnRemoveFilmFromList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				logger.info(" \n ---button 'Видалити фільм' was perfomed!--- ");
+				logger.debug(" \n ---button 'Видалити фільм' was perfomed!--- ");
 				try {
 					RemoveMovieController removeMovieController = new RemoveMovieController();
 					removeMovieController.getFrame().setVisible(true);
 
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1);
-					logger.log(Level.WARN, e1.getMessage().toUpperCase());
+					logger.error(e1);
 				}
 
 			}
@@ -116,7 +115,7 @@ public class CinemaGuiMain {
 		JButton btnRemoveSeance = new JButton("Видалити сеанс");
 		btnRemoveSeance.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				logger.info("\n ---button 'Видалити сеанс' was perfomed!--- ");
+				logger.debug("\n ---button 'Видалити сеанс' was perfomed!--- ");
 				try {
 
 					RemoveSeanceController cinGuiRemoveSeance = new RemoveSeanceController();
@@ -124,7 +123,7 @@ public class CinemaGuiMain {
 
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1);
-					logger.log(Level.WARN, e1.getMessage().toUpperCase());
+					logger.error(e1);
 				}
 
 			}
@@ -138,7 +137,7 @@ public class CinemaGuiMain {
 			CinemaService cinemaService = new CinemaService(palace);
 
 			public void actionPerformed(ActionEvent e) {
-				logger.info("\n ---button 'Заповнити розклад улюбленими фільмами' was perfomed!--- ");
+				logger.debug("\n ---button 'Заповнити розклад улюбленими фільмами' was perfomed!--- ");
 				try {
 					cinemaService.addMovie(new Movie("Transformers 2", new Time(2, 34)), new Time(10, 20),
 							new Time(20, 10));
@@ -152,7 +151,7 @@ public class CinemaGuiMain {
 
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1);
-					logger.log(Level.WARN, e1.getMessage().toUpperCase());
+					logger.error(e1);
 				}
 
 			}
@@ -163,7 +162,7 @@ public class CinemaGuiMain {
 		JButton btnShowSchedule = new JButton("Вивести розклад на екран");
 		btnShowSchedule.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				logger.info("\n --- button 'Вивести розклад на екран' was perfomed!--- ");
+				logger.debug("\n --- button 'Вивести розклад на екран' was perfomed!--- ");
 				ShowScheduleView showScheduleView;
 				try {
 
@@ -174,6 +173,7 @@ public class CinemaGuiMain {
 
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1);
+					logger.error(e1);
 				}
 
 			}

@@ -66,7 +66,7 @@ private final static Logger logger = Logger.getLogger(TransformMovie2SeanceView.
 	 * @param countSeances
 	 */
 	private void initComponents(int countSeances) {
-		logger.info(" Initialize components for '"+countSeances+"' seances in 'TransformMovie2SeanceView' was started!");
+		logger.debug(" Initialize components for '"+countSeances+"' seances in 'TransformMovie2SeanceView' was started!");
 		JLabel labelInfo = new JLabel("Ви вибрали кількість сеансів : " + countSeances);
 		labelInfo.setBounds(65, 11, 254, 25);
 		labelInfo.setFont(new Font("Tahoma", Font.BOLD, 12));

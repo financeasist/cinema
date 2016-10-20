@@ -7,7 +7,6 @@ import javax.swing.AbstractButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import ua.com.cinema.main.CinemaGuiMain;
@@ -53,7 +52,7 @@ public class AddSeanceController {
 	 * сеанс'. exactly he adds a new seance to schedule;
 	 */
 	public void initController() {
-		logger.info("initController() was started!");
+		logger.debug("initController() was started!");
 		btnSubmit = view.getBtnSubmit();
 		btnSubmit.addActionListener(new ActionListener() {
 			CinemaService cinemaService = new CinemaService(CinemaGuiMain.palace);
@@ -61,7 +60,7 @@ public class AddSeanceController {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					logger.info(" Button 'додати сеанс' was perfomed!");
+					logger.debug(" Button 'add seance' was perfomed!");
 					day = view.getDay();
 					titleMovie = view.getTitle();
 					durationTime = view.getDurationTime();
@@ -86,15 +85,28 @@ public class AddSeanceController {
 							frame.dispose();
 							logger.info(
 									"new seance '" + titleMovie + "' at :" + seanceStartTime + " succssesfully added!");
+						}else{
+							JOptionPane.showMessageDialog(null,
+									"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру! \n години роботи кінотеатру:  "
+											+ CinemaGuiMain.palace.getTimeOpen() + " - "
+											+ CinemaGuiMain.palace.getTimeClose() + " ! ");
+						logger.warn("user entered wrong time for seance!");
 						}
 					} else{
 						JOptionPane.showMessageDialog(null,
-								"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
-					logger.info("user entered wrong time for seance!");
+								"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру! \n години роботи кінотеатру:  "
+										+ CinemaGuiMain.palace.getTimeOpen() + " - "
+										+ CinemaGuiMain.palace.getTimeClose() + " ! ");
+					logger.warn("user entered wrong time for seance!");
 					}
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, e1);
-					logger.log(Level.INFO, e1.getMessage());
+				} catch (NullPointerException e1) {
+					JOptionPane.showMessageDialog(null, "Будь-ласка, виберіть сеанс!");
+					logger.error( e1);
+					logger.warn("user didn't choose seance!");
+				}catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, e2);
+					logger.error( e2);
+					
 				}
 			}
 		});

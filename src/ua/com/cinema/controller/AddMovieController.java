@@ -7,7 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import ua.com.cinema.util.ViewUtil;
@@ -47,7 +46,7 @@ public class AddMovieController {
 	 * appropriate TransformMovie2SeanceController for this count.
 	 */
 	private void initController() {
-		logger.info("initController() was started!");
+		logger.debug("initController() was started!");
 		btnSubmit = view.getBtnSubmit();
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -61,23 +60,23 @@ public class AddMovieController {
 					case 1:
 						addNewFilmController = new TransformMovie2SeanceController(keyCheck);
 						addNewFilmController.getFrame().setVisible(true);
-						logger.info("user enters count of seances = '"+keyCheck+"' !");
+						logger.info("user enters count of seances = '" + keyCheck + "' !");
 						break;
 
 					case 2:
 						addNewFilmController = new TransformMovie2SeanceController(keyCheck);
 						addNewFilmController.getFrame().setVisible(true);
-						logger.info("user enters count of seances = '"+keyCheck+"' !");
+						logger.info("user enters count of seances = '" + keyCheck + "' !");
 						break;
 					case 3:
 						addNewFilmController = new TransformMovie2SeanceController(keyCheck);
 						addNewFilmController.getFrame().setVisible(true);
-						logger.info("user enters count of seances = '"+keyCheck+"' !");
+						logger.info("user enters count of seances = '" + keyCheck + "' !");
 						break;
 
 					default:
 						JOptionPane.showMessageDialog(null, "Введіть 1, 2 або 3!");
-						logger.info("user don't enters count of seances!");
+						logger.warn("user don't enters count of seances!");
 						break;
 					}
 
@@ -85,7 +84,7 @@ public class AddMovieController {
 
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1);
-					logger.log(Level.INFO, e1.getMessage());
+					logger.error(e1);
 				}
 			}
 		});

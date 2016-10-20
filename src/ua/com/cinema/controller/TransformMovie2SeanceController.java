@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import ua.com.cinema.main.CinemaGuiMain;
@@ -51,8 +50,8 @@ public class TransformMovie2SeanceController {
 	 * @param countSeancess
 	 */
 	public TransformMovie2SeanceController(int countSeancess) {
-		logger.info(" User entered countOfSeances ='" + countSeancess + "'! \n"
-				+ " Initialize TransformMovie2SeanceController for ('" + countSeancess + "') seances was started!");
+		logger.info(" User entered countOfSeances ='" + countSeancess + "'!");
+		logger.debug(" Initialize TransformMovie2SeanceController for ('" + countSeancess + "') seances was started!");
 		countSeances = countSeancess;
 		view = new TransformMovie2SeanceView();
 		frame = view.getFrame();
@@ -64,7 +63,7 @@ public class TransformMovie2SeanceController {
 			btnSubmit.setBounds(96, 83, 156, 25);
 			btnSubmit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					logger.info(" Button 'Додати фільм' with '" + countSeances + "' seances was perfomed!");
+					logger.debug(" Button 'Додати фільм' with '" + countSeances + "' seances was perfomed!");
 					try {
 						startH1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1HH());
 						startM1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1Mm());
@@ -87,17 +86,21 @@ public class TransformMovie2SeanceController {
 										+ startTime1.toString() + " was succsessfully edded!");
 							} else {
 								JOptionPane.showMessageDialog(null,
-										"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
-								logger.info("User entered wrong time for seance!");
+										"Ви ввели не вірний час сеансу!  години роботи кінотеатру:  "
+												+ CinemaGuiMain.palace.getTimeOpen() + " - "
+												+ CinemaGuiMain.palace.getTimeClose() + "!");
+								logger.warn("User entered wrong time for seance!");
 							}
 						} else {
 							JOptionPane.showMessageDialog(null,
-									"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
-							logger.info("User entered wrong time for seance!");
+									"Ви ввели не вірний час сеансу!  години роботи кінотеатру:  "
+											+ CinemaGuiMain.palace.getTimeOpen() + " - "
+											+ CinemaGuiMain.palace.getTimeClose() + "!");
+							logger.warn("User entered wrong time for seance!");
 						}
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(null, e1);
-						logger.log(Level.INFO, e1.getMessage().toUpperCase());
+						logger.error(e1);
 					}
 
 				}
@@ -109,7 +112,7 @@ public class TransformMovie2SeanceController {
 				public void actionPerformed(ActionEvent e) {
 
 					try {
-						logger.info(" Button 'Додати фільм' with '" + countSeances + "' seances was perfomed!");
+						logger.debug(" Button 'Додати фільм' with '" + countSeances + "' seances was perfomed!");
 						startH1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1HH());
 						startM1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1Mm());
 						startH2 = ViewUtil.textField2Integer(view.getTextFieldStartTime2HH());
@@ -143,17 +146,21 @@ public class TransformMovie2SeanceController {
 										+ " was succsessfully edded!");
 							} else {
 								JOptionPane.showMessageDialog(null,
-										"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
-								logger.info("User entered wrong time for seance!");
+										"Ви ввели не вірний час сеансу!  години роботи кінотеатру:  "
+												+ CinemaGuiMain.palace.getTimeOpen() + " - "
+												+ CinemaGuiMain.palace.getTimeClose() + "!");
+								logger.warn("User entered wrong time for seance!");
 							}
 						} else {
 							JOptionPane.showMessageDialog(null,
-									"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
-							logger.info("User entered wrong time for seance!");
+									"Ви ввели не вірний час сеансу!  години роботи кінотеатру:  "
+											+ CinemaGuiMain.palace.getTimeOpen() + " - "
+											+ CinemaGuiMain.palace.getTimeClose() + "!");
+							logger.warn("User entered wrong time for seance!");
 						}
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(null, e1);
-						logger.log(Level.INFO, e1.getMessage().toUpperCase());
+						logger.error(e1);
 					}
 				}
 			});
@@ -163,7 +170,7 @@ public class TransformMovie2SeanceController {
 			btnSubmit.addActionListener(new ActionListener() {
 
 				public void actionPerformed(ActionEvent e) {
-					logger.info(" Button 'Додати фільм' with " + countSeances + " seances was perfomed!");
+					logger.debug(" Button 'Додати фільм' with " + countSeances + " seances was perfomed!");
 					try {
 						startH1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1HH());
 						startM1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1Mm());
@@ -196,18 +203,22 @@ public class TransformMovie2SeanceController {
 										+ startTime3.toString() + " was succsessfully edded!");
 							} else {
 								JOptionPane.showMessageDialog(null,
-										"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
-								logger.info("User entered wrong time for seance!");
+										"Ви ввели не вірний час сеансу!  години роботи кінотеатру:  "
+												+ CinemaGuiMain.palace.getTimeOpen() + " - "
+												+ CinemaGuiMain.palace.getTimeClose() + "!");
+								logger.warn("User entered wrong time for seance!");
 							}
 
 						} else {
 							JOptionPane.showMessageDialog(null,
-									"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
-							logger.info("User entered wrong time for seance!");
+									"Ви ввели не вірний час сеансу!  години роботи кінотеатру:  "
+											+ CinemaGuiMain.palace.getTimeOpen() + " - "
+											+ CinemaGuiMain.palace.getTimeClose() + "!");
+							logger.warn("User entered wrong time for seance!");
 						}
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(null, e1);
-						logger.log(Level.INFO, e1.getMessage());
+						logger.error(e1);
 					}
 				}
 			});

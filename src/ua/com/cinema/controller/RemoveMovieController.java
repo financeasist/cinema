@@ -7,7 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import ua.com.cinema.main.CinemaGuiMain;
@@ -46,21 +45,23 @@ public class RemoveMovieController {
 			CinemaService cinemaService = new CinemaService(CinemaGuiMain.palace);
 
 			public void actionPerformed(ActionEvent e) {
-				logger.info(" Button 'delete movie' was perfomed!");
+				logger.debug(" Button 'delete movie' was perfomed!");
 				try {
 					filmName = view.getTitle();
 					boolean isRemoved = cinemaService.removeMovie(filmName);
-					if (isRemoved){
+					if (isRemoved) {
 						JOptionPane.showMessageDialog(null, "фільм '" + filmName + " ' видалено з розкладу!");
-						logger.info("movie '"+filmName+"' was succsessfully deleted!");}
-					else{
+						logger.info("movie '" + filmName + "' was succsessfully deleted!");
+						frame.dispose();
+					}
+					else {
 						JOptionPane.showMessageDialog(null, "такого фільму: ' " + filmName + "' в розкладі нема!");
-						logger.info("Movie not found!");
-					frame.dispose();
+						logger.warn("Movie not found!");
+						frame.dispose();
 					}
 				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null,e1.getMessage());
-					logger.log(Level.INFO,e1.getMessage().toUpperCase());
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+					logger.error(e1);
 				}
 			}
 		});

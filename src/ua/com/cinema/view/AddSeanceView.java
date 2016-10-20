@@ -49,7 +49,7 @@ public class AddSeanceView {
 
 	private JTextField textFieldSeanceStartTimeHH;
 	private JTextField textFieldStartTimeFilmSeanceMm;
-	private JComboBox<Object> comboBoxDays;
+	
 	private CinemaService cinemaService = new CinemaService(CinemaGuiMain.palace);
 	private Seance seance = null;
 	private Time durationTime;
@@ -67,7 +67,7 @@ public class AddSeanceView {
 	 * Creates a frame;
 	 */
 	public void initWindow() {
-		logger.info("Init start window for AddSeanceView was started!");
+		logger.debug("Init start window for AddSeanceView was started!");
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 		frame.setTitle("**@author RomanGrupskyi");
@@ -85,9 +85,10 @@ public class AddSeanceView {
 	 * when he wants to add.
 	 */
 	private void initWindowComponents() {
-		logger.info("Init initWindowComponents() for AddSeanceView was started!");
+		
+		logger.debug("Init initWindowComponents() for AddSeanceView was started!");
 		Days[] days = Days.values();
-		comboBoxDays = new JComboBox<Object>(days);
+		final JComboBox<Object> comboBoxDays = new JComboBox<Object>(days);
 		comboBoxDays.setEditable(true);
 		comboBoxDays.setBackground(Color.WHITE);
 		/**
@@ -97,7 +98,7 @@ public class AddSeanceView {
 
 			@Override
 			public void itemStateChanged(ItemEvent event) {
-				logger.info("started ItemListener for 'comboBoxDays'!");
+				logger.debug("started ItemListener for 'comboBoxDays'!");
 				if (event.getStateChange() == ItemEvent.SELECTED)
 					day = comboBoxDays.getSelectedItem().toString();
 				logger.info("user choosed " + day + "!");
@@ -125,7 +126,7 @@ public class AddSeanceView {
 		}
 		Object[] titles = setTitles.toArray();
 		
-		JComboBox<Object> comboBoxTitles = new JComboBox<Object>(titles);
+		final JComboBox<Object> comboBoxTitles = new JComboBox<Object>(titles);
 		comboBoxTitles.setBackground(Color.WHITE);
 		comboBoxTitles.setEditable(true);
 		/**
@@ -134,7 +135,7 @@ public class AddSeanceView {
 		comboBoxTitles.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent event) {
-				logger.info("started ItemListener for 'comboBoxTitles'!");
+				logger.debug("started ItemListener for 'comboBoxTitles'!");
 				if (event.getStateChange() == ItemEvent.SELECTED) {
 					Object selectedTitle = comboBoxTitles.getSelectedItem();
 					title = (String) selectedTitle;

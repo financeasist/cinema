@@ -16,7 +16,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import ua.com.cinema.enums.Days;
@@ -49,7 +48,6 @@ public class RemoveSeanceView {
 	private JFrame frame;
 	private JPanel contentPane;
 	private JButton btnSubmit;
-	private JComboBox<Object> comboBoxDays;
 
 	/**
 	 * creates a Window for RemoveSeanceView;
@@ -60,7 +58,7 @@ public class RemoveSeanceView {
 	}
 
 	public void initWindow() {
-		logger.info("start's Window for 'RemoveSeance' was started!");
+		logger.debug("start's Window for 'RemoveSeance' was started!");
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 		frame.setTitle("**@author RomanGrupskyi");
@@ -79,15 +77,15 @@ public class RemoveSeanceView {
 	 * seance he want to remove;
 	 */
 	private void initWindowComponents() {
-		logger.info("init window's components for 'RemoveSeance' was started!");
+		logger.debug("init window's components for 'RemoveSeance' was started!");
 		Days[] days = Days.values();
-		comboBoxDays = new JComboBox<Object>(days);
+		final JComboBox<Object> comboBoxDays = new JComboBox<Object>(days);
 		comboBoxDays.setEditable(true);
 		comboBoxDays.setBackground(Color.WHITE);
 		comboBoxDays.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent event) {
-				logger.info(" itemState in 'comboBoxDays' was chenged!");
+				logger.debug(" itemState in 'comboBoxDays' was chenged!");
 				if (event.getStateChange() == ItemEvent.SELECTED) {
 					day = comboBoxDays.getSelectedItem().toString();
 					logger.info("user selected day: '" + day + "' !");
@@ -124,7 +122,7 @@ public class RemoveSeanceView {
 
 			@Override
 			public void itemStateChanged(ItemEvent event) {
-				logger.info(" itemState in 'comboBoxSchedule' was chenged!");
+				logger.debug(" itemState in 'comboBoxSchedule' was chenged!");
 				try {
 					if (event.getStateChange() == ItemEvent.SELECTED) {
 						Object selectedSeance = comboBoxSchedule.getSelectedItem();
@@ -137,7 +135,7 @@ public class RemoveSeanceView {
 						logger.info("user selected to remove seance: '" + seance.toString() + "'!");
 					}
 				} catch (Exception e) {
-					logger.log(Level.WARN, e.getMessage().toUpperCase());
+					logger.error(e);
 				}
 			}
 		});
@@ -182,14 +180,6 @@ public class RemoveSeanceView {
 
 	public void setBtnSubmit(JButton btnSubmit) {
 		this.btnSubmit = btnSubmit;
-	}
-
-	public JComboBox<Object> getComboBoxDays() {
-		return comboBoxDays;
-	}
-
-	public void setComboBox(JComboBox<Object> comboBox) {
-		this.comboBoxDays = comboBox;
 	}
 
 	public static String getDay() {
