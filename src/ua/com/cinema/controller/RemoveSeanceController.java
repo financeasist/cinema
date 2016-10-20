@@ -7,6 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import ua.com.cinema.main.CinemaGuiMain;
 import ua.com.cinema.model.Movie;
 import ua.com.cinema.model.Seance;
@@ -18,20 +21,21 @@ import ua.com.cinema.view.RemoveSeanceView;
  * This class takes values from RemoveSeanceView.java and remove seance from
  * schedule;
  * 
- * @version 1.3 14 Oct 2016
+ * @version 1.3 18 Oct 2016
  * @author RomanGrupskyi
  *
  */
 public class RemoveSeanceController {
 
+	private final static Logger logger = Logger.getLogger(RemoveSeanceController.class);
 	private RemoveSeanceView view;
 	private JFrame frame;
 	private JButton btnSubmit;
-
 	private String titleCin;
 	private Time durationTime;
 	private String day;
 	private Time seanceStartTime;
+	private CinemaService cinemaService;
 
 	/**
 	 * Creates the RemoveSeanceController()
@@ -47,14 +51,14 @@ public class RemoveSeanceController {
 	 * removes seance;
 	 */
 	private void initController() {
-
+		cinemaService = new CinemaService(CinemaGuiMain.palace);
 		btnSubmit = view.getBtnSubmit();
 
 		btnSubmit.addActionListener(new ActionListener() {
-			CinemaService cinemaService = new CinemaService(CinemaGuiMain.palace);
 
 			public void actionPerformed(ActionEvent e) {
 				try {
+					logger.info(" Button 'delete seance' was perfomed!");
 					day = RemoveSeanceView.getDay();
 					titleCin = RemoveSeanceView.getTitleFilmtoRemove();
 					durationTime = RemoveSeanceView.getDurationTime();
@@ -63,9 +67,12 @@ public class RemoveSeanceController {
 					JOptionPane.showMessageDialog(null, "сеанс  фільму '" + titleCin + "' в " + day + " o "
 							+ seanceStartTime.toString() + " видалено!");
 					frame.dispose();
+					logger.info("seance movie 'titleCin' at " + seanceStartTime + " in " + day
+							+ " was succsessfully removed!");
 
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1);
+					logger.log(Level.INFO, e1.getMessage());
 				}
 			}
 		});

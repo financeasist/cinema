@@ -7,6 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import ua.com.cinema.util.ViewUtil;
 import ua.com.cinema.view.AddMovieView;
 
@@ -15,13 +18,13 @@ import ua.com.cinema.view.AddMovieView;
  * checks how many seances user wants to create for every day. and creates
  * appropriate 'TransformMovie2SeanceController' for this count.
  * 
- * @version 1.2 10 Oct 2016
+ * @version 1.3 10 Oct 2018
  * @author RomanGupskyi
  *
  */
 
 public class AddMovieController {
-
+	static final Logger logger = Logger.getLogger(AddMovieController.class);
 	static String titleFilm;
 	static Integer durationCinH;
 	static Integer durationCinM;
@@ -44,7 +47,7 @@ public class AddMovieController {
 	 * appropriate TransformMovie2SeanceController for this count.
 	 */
 	private void initController() {
-
+		logger.info("initController() was started!");
 		btnSubmit = view.getBtnSubmit();
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -58,22 +61,23 @@ public class AddMovieController {
 					case 1:
 						addNewFilmController = new TransformMovie2SeanceController(keyCheck);
 						addNewFilmController.getFrame().setVisible(true);
-
+						logger.info("user enters count of seances = '"+keyCheck+"' !");
 						break;
 
 					case 2:
 						addNewFilmController = new TransformMovie2SeanceController(keyCheck);
 						addNewFilmController.getFrame().setVisible(true);
-
+						logger.info("user enters count of seances = '"+keyCheck+"' !");
 						break;
 					case 3:
 						addNewFilmController = new TransformMovie2SeanceController(keyCheck);
 						addNewFilmController.getFrame().setVisible(true);
-
+						logger.info("user enters count of seances = '"+keyCheck+"' !");
 						break;
 
 					default:
 						JOptionPane.showMessageDialog(null, "Введіть 1, 2 або 3!");
+						logger.info("user don't enters count of seances!");
 						break;
 					}
 
@@ -81,6 +85,7 @@ public class AddMovieController {
 
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1);
+					logger.log(Level.INFO, e1.getMessage());
 				}
 			}
 		});

@@ -7,12 +7,16 @@ import javax.swing.AbstractButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import ua.com.cinema.main.CinemaGuiMain;
 import ua.com.cinema.model.Movie;
 import ua.com.cinema.model.Seance;
 import ua.com.cinema.model.Time;
 import ua.com.cinema.service.CinemaService;
 import ua.com.cinema.util.SeanceUtil;
+import ua.com.cinema.util.ViewUtil;
 import ua.com.cinema.view.AddSeanceView;
 
 /**
@@ -24,7 +28,7 @@ import ua.com.cinema.view.AddSeanceView;
  * @author RomanGupskyi
  */
 public class AddSeanceController {
-
+	private final static Logger logger = Logger.getLogger(AddSeanceController.class);
 	static JFrame frame;
 	static AddSeanceView view;
 
@@ -45,28 +49,30 @@ public class AddSeanceController {
 	}
 
 	/**
-	 * this method describe what will happend when user enter a buttton
-	 * 'додати сеанс'. exactly he adds a new seance to schedule;
+	 * this method describe what will happend when user enter a buttton 'додати
+	 * сеанс'. exactly he adds a new seance to schedule;
 	 */
 	public void initController() {
-
+		logger.info("initController() was started!");
 		btnSubmit = view.getBtnSubmit();
 		btnSubmit.addActionListener(new ActionListener() {
 			CinemaService cinemaService = new CinemaService(CinemaGuiMain.palace);
 
 			public void actionPerformed(ActionEvent e) {
+				
 				try {
-
+					logger.info(" Button 'додати сеанс' was perfomed!");
 					day = view.getDay();
 					titleMovie = view.getTitle();
 					durationTime = view.getDurationTime();
-					seanceH = Integer.parseInt(view.getTextFieldSeanceStartTimeHH().getText());
-					seanceM = Integer.parseInt(view.getTextFieldStartTimeFilmSeanceMm().getText());
+					seanceH = ViewUtil.textField2Integer(view.getTextFieldSeanceStartTimeHH());
+					seanceM = ViewUtil.textField2Integer(view.getTextFieldStartTimeFilmSeanceMm());
 					Time seanceStartTime = new Time(seanceH, seanceM);
+					logger.info(" user entered Time for seance " + seanceStartTime + " !");
 					Time seanceEndTime = SeanceUtil.calculateEndTime(seanceStartTime, durationTime);
 					boolean isCorrectTime = cinemaService.compareWithCinemaWorkingTime(seanceStartTime, seanceEndTime);
 					/**
-					 * checks seance time 
+					 * checks seance time
 					 */
 					if (isCorrectTime) {
 						boolean isAdded = cinemaService.addSeance(day,
@@ -78,15 +84,17 @@ public class AddSeanceController {
 											+ "щоб побачити розклад, натисніть кнопку: 'вивести розклад на екран'");
 
 							frame.dispose();
-						} else
-							JOptionPane.showMessageDialog(null,
-									"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
-
-					} else
+							logger.info(
+									"new seance '" + titleMovie + "' at :" + seanceStartTime + " succssesfully added!");
+						}
+					} else{
 						JOptionPane.showMessageDialog(null,
 								"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
+					logger.info("user entered wrong time for seance!");
+					}
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1);
+					logger.log(Level.INFO, e1.getMessage());
 				}
 			}
 		});

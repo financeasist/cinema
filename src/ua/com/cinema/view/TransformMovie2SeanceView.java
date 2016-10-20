@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.log4j.Logger;
+
 import ua.com.cinema.controller.TransformMovie2SeanceController;
 
 /**
@@ -19,7 +21,7 @@ import ua.com.cinema.controller.TransformMovie2SeanceController;
  * @author RomanGupskyi
  */
 public class TransformMovie2SeanceView {
-
+private final static Logger logger = Logger.getLogger(TransformMovie2SeanceView.class);
 	private JFrame frame;
 	private JLabel label_1;
 	private JLabel lblNewLabel;
@@ -40,6 +42,7 @@ public class TransformMovie2SeanceView {
 		
 		initWindow();
 		initComponents(countSeances);
+		
 	}
 	public void initWindow(){
 		
@@ -63,6 +66,7 @@ public class TransformMovie2SeanceView {
 	 * @param countSeances
 	 */
 	private void initComponents(int countSeances) {
+		logger.info(" Initialize components for '"+countSeances+"' seances in 'TransformMovie2SeanceView' was started!");
 		JLabel labelInfo = new JLabel("Ви вибрали кількість сеансів : " + countSeances);
 		labelInfo.setBounds(65, 11, 254, 25);
 		labelInfo.setFont(new Font("Tahoma", Font.BOLD, 12));

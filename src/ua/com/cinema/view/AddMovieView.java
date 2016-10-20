@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
  */
 
 public class AddMovieView {
-	final static Logger logger = Logger.getLogger(AddMovieView.class); 
+	private final static Logger logger = Logger.getLogger(AddMovieView.class); 
 	private JFrame frame;
 	private JButton btnSubmit;
 	private JPanel contentPane;
@@ -40,9 +40,9 @@ public class AddMovieView {
 	public AddMovieView() {
 		initWindow();
 		initWindowComponents();
+		logger.info("Init start window for AddMovieView was started");
 	}
 		public void initWindow(){
-		logger.info("Init method was started");	
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 		frame.setTitle("**@author RomanGrupskyi");
