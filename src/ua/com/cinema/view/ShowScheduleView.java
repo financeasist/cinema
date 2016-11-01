@@ -7,15 +7,17 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import org.apache.log4j.Logger;
+
 /**
  * This class creates a new window with textArea and other components (view) to
  * show the actual schedule.
  * 
- * @version 1.2 10 Oct 2016
+ * @version 1.3 19 Oct 2016
  * @author RomanGupskyi
  */
 public class ShowScheduleView {
-
+	private final static Logger logger = Logger.getLogger(ShowScheduleView.class);
 	public static JTextArea textArea;
 	private JFrame frame;
 	private JLabel label_1;
@@ -25,7 +27,7 @@ public class ShowScheduleView {
 	 * Creates the Window
 	 */
 	public ShowScheduleView() {
-
+		logger.debug("Start window for 'Show Schedule' was started!");
 		frame = new JFrame();
 		frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 		frame.setTitle("**@author RomanGrupskyi");

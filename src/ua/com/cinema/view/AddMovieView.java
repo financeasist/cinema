@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.log4j.Logger;
+
 /**
  * This class creates a start window (view) for add new movie and checks how
  * many seances user wants to create for every day. 
@@ -18,7 +20,7 @@ import javax.swing.border.EmptyBorder;
  */
 
 public class AddMovieView {
-
+	private final static Logger logger = Logger.getLogger(AddMovieView.class); 
 	private JFrame frame;
 	private JButton btnSubmit;
 	private JPanel contentPane;
@@ -38,6 +40,7 @@ public class AddMovieView {
 	public AddMovieView() {
 		initWindow();
 		initWindowComponents();
+		logger.debug("Init start window for AddMovieView was started");
 	}
 		public void initWindow(){
 		frame = new JFrame();

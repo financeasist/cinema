@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Logger;
+
 import ua.com.cinema.main.CinemaGuiMain;
 import ua.com.cinema.service.CinemaService;
 import ua.com.cinema.view.RemoveMovieView;
@@ -19,7 +21,7 @@ import ua.com.cinema.view.RemoveMovieView;
  * @author RomanGupskyi
  */
 public class RemoveMovieController {
-
+	private final static Logger logger = Logger.getLogger(RemoveMovieController.class);
 	private JFrame frame;
 	private String filmName;
 	private RemoveMovieView view;
@@ -43,15 +45,23 @@ public class RemoveMovieController {
 			CinemaService cinemaService = new CinemaService(CinemaGuiMain.palace);
 
 			public void actionPerformed(ActionEvent e) {
+				logger.debug(" Button 'delete movie' was perfomed!");
 				try {
 					filmName = view.getTitle();
 					boolean isRemoved = cinemaService.removeMovie(filmName);
-					if (isRemoved)
+					if (isRemoved) {
 						JOptionPane.showMessageDialog(null, "фільм '" + filmName + " ' видалено з розкладу!");
-					else
+						logger.info("movie '" + filmName + "' was succsessfully deleted!");
+						frame.dispose();
+					}
+					else {
 						JOptionPane.showMessageDialog(null, "такого фільму: ' " + filmName + "' в розкладі нема!");
-					frame.dispose();
+						logger.warn("Movie not found!");
+						frame.dispose();
+					}
 				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+					logger.error(e1);
 				}
 			}
 		});

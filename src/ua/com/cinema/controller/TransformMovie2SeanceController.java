@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Logger;
+
 import ua.com.cinema.main.CinemaGuiMain;
 import ua.com.cinema.model.Movie;
 import ua.com.cinema.model.Time;
@@ -25,6 +27,7 @@ import ua.com.cinema.view.TransformMovie2SeanceView;
  */
 public class TransformMovie2SeanceController {
 
+	private final static Logger logger = Logger.getLogger(TransformMovie2SeanceController.class);
 	public static int countSeances;
 	private JFrame frame;
 	private TransformMovie2SeanceView view;
@@ -37,7 +40,6 @@ public class TransformMovie2SeanceController {
 	private String titleCin = AddMovieController.titleFilm;
 	private Integer durationCinH = AddMovieController.durationCinH;
 	private Integer durationCinM = AddMovieController.durationCinM;
-
 	private CinemaService cinemaService = new CinemaService(CinemaGuiMain.palace);
 	private Container contentPane;
 
@@ -48,17 +50,20 @@ public class TransformMovie2SeanceController {
 	 * @param countSeancess
 	 */
 	public TransformMovie2SeanceController(int countSeancess) {
+		logger.info(" User entered countOfSeances ='" + countSeancess + "'!");
+		logger.debug(" Initialize TransformMovie2SeanceController for ('" + countSeancess + "') seances was started!");
 		countSeances = countSeancess;
 		view = new TransformMovie2SeanceView();
 		frame = view.getFrame();
 		contentPane = view.getContentPane();
 		Time durationTime = new Time(durationCinH, durationCinM);
 		JButton btnSubmit = new JButton("Додати фільм");
-		
+
 		if (countSeances == 1) {
 			btnSubmit.setBounds(96, 83, 156, 25);
 			btnSubmit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					logger.debug(" Button 'Додати фільм' with '" + countSeances + "' seances was perfomed!");
 					try {
 						startH1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1HH());
 						startM1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1Mm());
@@ -77,15 +82,25 @@ public class TransformMovie2SeanceController {
 										+ " Щоб побачити розклад, натисніть кнопку 'вивести розклад на екран'!");
 
 								frame.dispose();
-							} else
+								logger.info("New movie '" + titleCin + "' with '" + countSeances + "' seances at "
+										+ startTime1.toString() + " was succsessfully edded!");
+							} else {
 								JOptionPane.showMessageDialog(null,
-										"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
-
-						} else
+										"Ви ввели не вірний час сеансу!  години роботи кінотеатру:  "
+												+ CinemaGuiMain.palace.getTimeOpen() + " - "
+												+ CinemaGuiMain.palace.getTimeClose() + "!");
+								logger.warn("User entered wrong time for seance!");
+							}
+						} else {
 							JOptionPane.showMessageDialog(null,
-									"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
+									"Ви ввели не вірний час сеансу!  години роботи кінотеатру:  "
+											+ CinemaGuiMain.palace.getTimeOpen() + " - "
+											+ CinemaGuiMain.palace.getTimeClose() + "!");
+							logger.warn("User entered wrong time for seance!");
+						}
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(null, e1);
+						logger.error(e1);
 					}
 
 				}
@@ -94,10 +109,10 @@ public class TransformMovie2SeanceController {
 		if (countSeances == 2) {
 			btnSubmit.setBounds(69, 132, 156, 25);
 			btnSubmit.addActionListener(new ActionListener() {
-
 				public void actionPerformed(ActionEvent e) {
-					try {
 
+					try {
+						logger.debug(" Button 'Додати фільм' with '" + countSeances + "' seances was perfomed!");
 						startH1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1HH());
 						startM1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1Mm());
 						startH2 = ViewUtil.textField2Integer(view.getTextFieldStartTime2HH());
@@ -125,16 +140,27 @@ public class TransformMovie2SeanceController {
 										+ " Щоб побачити розклад, натисніть кнопку 'вивести розклад на екран'!");
 
 								frame.dispose();
-							} else
+
+								logger.info("new movie '" + titleCin + "' with '" + countSeances + "' seances at "
+										+ startTime1.toString() + " and " + startTime2.toString()
+										+ " was succsessfully edded!");
+							} else {
 								JOptionPane.showMessageDialog(null,
-										"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
-
-						} else
+										"Ви ввели не вірний час сеансу!  години роботи кінотеатру:  "
+												+ CinemaGuiMain.palace.getTimeOpen() + " - "
+												+ CinemaGuiMain.palace.getTimeClose() + "!");
+								logger.warn("User entered wrong time for seance!");
+							}
+						} else {
 							JOptionPane.showMessageDialog(null,
-									"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
-
+									"Ви ввели не вірний час сеансу!  години роботи кінотеатру:  "
+											+ CinemaGuiMain.palace.getTimeOpen() + " - "
+											+ CinemaGuiMain.palace.getTimeClose() + "!");
+							logger.warn("User entered wrong time for seance!");
+						}
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(null, e1);
+						logger.error(e1);
 					}
 				}
 			});
@@ -144,6 +170,7 @@ public class TransformMovie2SeanceController {
 			btnSubmit.addActionListener(new ActionListener() {
 
 				public void actionPerformed(ActionEvent e) {
+					logger.debug(" Button 'Додати фільм' with " + countSeances + " seances was perfomed!");
 					try {
 						startH1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1HH());
 						startM1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1Mm());
@@ -171,15 +198,27 @@ public class TransformMovie2SeanceController {
 										+ " Щоб побачити розклад, натисніть кнопку 'вивести розклад на екран'!");
 
 								frame.dispose();
-							} else
+								logger.info("New movie '" + titleCin + "' with '" + countSeances + "' seances at "
+										+ startTime1.toString() + " ; " + startTime2.toString() + " and "
+										+ startTime3.toString() + " was succsessfully edded!");
+							} else {
 								JOptionPane.showMessageDialog(null,
-										"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
+										"Ви ввели не вірний час сеансу!  години роботи кінотеатру:  "
+												+ CinemaGuiMain.palace.getTimeOpen() + " - "
+												+ CinemaGuiMain.palace.getTimeClose() + "!");
+								logger.warn("User entered wrong time for seance!");
+							}
 
-						} else
+						} else {
 							JOptionPane.showMessageDialog(null,
-									"Ви ввели не вірний час сеансу! Будь-ласка, узгодьте його з годинами роботи кінотеатру!");
+									"Ви ввели не вірний час сеансу!  години роботи кінотеатру:  "
+											+ CinemaGuiMain.palace.getTimeOpen() + " - "
+											+ CinemaGuiMain.palace.getTimeClose() + "!");
+							logger.warn("User entered wrong time for seance!");
+						}
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(null, e1);
+						logger.error(e1);
 					}
 				}
 			});

@@ -14,6 +14,8 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import org.apache.log4j.Logger;
+
 import ua.com.cinema.enums.Days;
 import ua.com.cinema.main.CinemaGuiMain;
 import ua.com.cinema.model.Cinema;
@@ -30,7 +32,8 @@ import ua.com.cinema.service.CinemaService;
  * @author RomanGupskyi
  */
 public class RemoveMovieView {
-
+	
+	private final static Logger logger = Logger.getLogger(RemoveMovieView .class);
 	private JFrame frame;
 	private JButton buttonSubmit;
 	private CinemaService cinemaService;
@@ -59,7 +62,7 @@ public class RemoveMovieView {
 	 * Adds a view components to frame
 	 */
 	private void initWindowComponents() {
-
+		logger.debug("initWindowComponents() for RemoveMovieView was started!");
 		JLabel lblFilmName = new JLabel("виберіть фільм який хочете видалити :");
 		lblFilmName.setFont(new Font("Times New Roman", Font.PLAIN, 13));
 		lblFilmName.setBounds(10, 23, 261, 20);
@@ -71,6 +74,7 @@ public class RemoveMovieView {
 		Set<String> titleset = new LinkedHashSet<String>();
 		titleset.add(title);
 		String movieTitle;
+		
 		for (Days day : Days.values()) {
 			Schedule seances = weeklySchedule.get(day);
 			Set<Seance> seances2 = seances.getSeances();
@@ -82,9 +86,12 @@ public class RemoveMovieView {
 			}
 		}
 			Object[] titles = titleset.toArray();
-			JComboBox<Object> comboBoxTitles = new JComboBox<Object>(titles);
+			final JComboBox<Object> comboBoxTitles = new JComboBox<Object>(titles);
 			comboBoxTitles.setBackground(Color.WHITE);
 			comboBoxTitles.setEditable(true);
+			/**
+			 * Here user selects movie
+			 */
 			comboBoxTitles.addItemListener(new ItemListener() {
 
 				@Override
@@ -92,6 +99,7 @@ public class RemoveMovieView {
 					if (event.getStateChange() == ItemEvent.SELECTED) {
 						Object selectedTitle = comboBoxTitles.getSelectedItem();
 						title = (String) selectedTitle;
+						logger.info("user selected '"+title+"' !");
 					}
 				}
 			});

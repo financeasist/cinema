@@ -5,6 +5,8 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import org.apache.log4j.Logger;
 /**
  * This class - it's view for CinemaGuiMain class. Creates the main JFraime.
  
@@ -12,12 +14,12 @@ import javax.swing.JLabel;
  * @author RomanGupskyi
  */
 public class CinemaGuiMainView {
-	
+	private final static Logger logger = Logger.getLogger(CinemaGuiMainView.class);
 	private JFrame frame;
 	private ImageIcon img;
 	
 	public CinemaGuiMainView() {
-		
+	logger.debug("Start's window for CinemaGuiMain was started !");	
 	frame = new JFrame();
 	frame.setFont(new Font("Times New Roman", Font.PLAIN, 7));
 	frame.setTitle("**@author RomanGrupskyi");
