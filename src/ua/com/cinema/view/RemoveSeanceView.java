@@ -114,7 +114,7 @@ public class RemoveSeanceView {
 			seancess.add(seance);
 		}
 		Object[] schedules = seancess.toArray();
-		JComboBox<Object> comboBoxSchedule = new JComboBox<Object>(schedules);
+		final JComboBox<Object> comboBoxSchedule = new JComboBox<Object>(schedules);
 		comboBoxSchedule.setBackground(Color.WHITE);
 		comboBoxSchedule.setEditable(true);
 

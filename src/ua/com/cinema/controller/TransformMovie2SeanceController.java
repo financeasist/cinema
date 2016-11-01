@@ -68,7 +68,7 @@ public class TransformMovie2SeanceController {
 						startH1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1HH());
 						startM1 = ViewUtil.textField2Integer(view.getTextFieldStartTime1Mm());
 						Time startTime1 = new Time(startH1, startM1);
-						Time endTime1 = SeanceUtil.calculateEndTime(startTime1, durationTime);
+						final Time endTime1 = SeanceUtil.calculateEndTime(startTime1, durationTime);
 						/**
 						 * checks time is correct and add movie
 						 */
